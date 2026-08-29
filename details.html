@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Manual Testing Handbook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="padding: 20px;">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="glass-card" style="max-width: 1000px; margin: auto; padding: 40px; color: #fff;">
+
+        <h1 style="color: var(--primary); margin-bottom: 30px;">
+            Complete Manual Testing Handbook
+        </h1>
+
+        <!-- 1 -->
+        <h2 style="color: var(--primary);">1. Introduction to Software Testing</h2>
+
+        <p>
+            <strong>Software Testing:</strong> Process of verifying and validating software
+            to ensure the application works according to requirements.
+        </p>
+
+        <p>
+            <strong>Goal:</strong> Find bugs, improve quality, increase reliability,
+            and deliver a stable product.
+        </p>
+
+        <p>
+            <strong>Why Testing is Important?</strong>
+        </p>
+
+        <ul>
+            <li>Improves software quality</li>
+            <li>Prevents production bugs</li>
+            <li>Enhances user experience</li>
+            <li>Reduces maintenance cost</li>
+            <li>Ensures business requirements are met</li>
+        </ul>
+
+        <br>
+
+        <!-- 2 -->
+        <h2 style="color: var(--primary);">2. SDLC (Software Development Life Cycle)</h2>
+
+        <ul>
+            <li>Requirement Gathering</li>
+            <li>Planning</li>
+            <li>Design</li>
+            <li>Development</li>
+            <li>Testing</li>
+            <li>Deployment</li>
+            <li>Maintenance</li>
+        </ul>
+
+        <br>
+
+        <!-- 3 -->
+        <h2 style="color: var(--primary);">3. STLC (Software Testing Life Cycle)</h2>
+
+        <ul>
+            <li>Requirement Analysis</li>
+            <li>Test Planning</li>
+            <li>Test Case Development</li>
+            <li>Environment Setup</li>
+            <li>Test Execution</li>
+            <li>Bug Reporting</li>
+            <li>Test Closure</li>
+        </ul>
+
+        <br>
+
+        <!-- 4 -->
+        <h2 style="color: var(--primary);">4. Types of Testing</h2>
+
+        <h3>Functional Testing</h3>
+        <p>Testing application functionality according to requirements.</p>
+
+        <h3>Regression Testing</h3>
+        <p>Ensuring new changes do not affect existing functionality.</p>
+
+        <h3>Smoke Testing</h3>
+        <p>Basic testing to verify critical features are working.</p>
+
+        <h3>Sanity Testing</h3>
+        <p>Checking whether specific bug fixes or modules work correctly.</p>
+
+        <h3>UI Testing</h3>
+        <p>Verifying design, buttons, alignment, responsiveness, and layout.</p>
+
+        <h3>Compatibility Testing</h3>
+        <p>Testing application on different browsers, devices, and OS.</p>
+
+        <h3>Performance Testing</h3>
+        <p>Checking speed, stability, and responsiveness under load.</p>
+
+        <h3>Security Testing</h3>
+        <p>Ensuring application is protected from vulnerabilities.</p>
+
+        <h3>Database Testing</h3>
+        <p>Validating data storage, retrieval, and database integrity.</p>
+
+        <br>
+
+        <!-- 5 -->
+        <h2 style="color: var(--primary);">5. Black Box & White Box Testing</h2>
+
+        <p>
+            <strong>Black Box Testing:</strong>
+            Testing without knowledge of internal code.
+        </p>
+
+        <p>
+            <strong>White Box Testing:</strong>
+            Testing internal code structure and logic.
+        </p>
+
+        <br>
+
+        <!-- 6 -->
+        <h2 style="color: var(--primary);">6. Severity vs Priority</h2>
+
+        <table border="1" cellpadding="10" cellspacing="0" width="100%"
+            style="border-collapse: collapse; color: white;">
+            <tr>
+                <th>Severity</th>
+                <th>Priority</th>
+            </tr>
+
+            <tr>
+                <td>Impact of the bug</td>
+                <td>Urgency to fix the bug</td>
+            </tr>
+
+            <tr>
+                <td>Defined by Tester</td>
+                <td>Defined by Manager/Business</td>
+            </tr>
+        </table>
+
+        <br>
+
+        <!-- 7 -->
+        <h2 style="color: var(--primary);">7. Bug Life Cycle</h2>
+
+        <ul>
+            <li>New</li>
+            <li>Assigned</li>
+            <li>Open</li>
+            <li>Fixed</li>
+            <li>Retest</li>
+            <li>Verified</li>
+            <li>Closed</li>
+            <li>Reopened</li>
+        </ul>
+
+        <br>
+
+        <!-- 8 -->
+        <h2 style="color: var(--primary);">8. Test Case Format</h2>
+
+        <pre
+            style="background: rgba(255,255,255,0.08); padding: 15px; border-radius: 10px; overflow-x:auto; color: #00ffcc;">
+Test Case ID:
+Module:
+Scenario:
+Precondition:
+Test Steps:
+Expected Result:
+Actual Result:
+Status:
+Priority:
+Severity:
+</pre>
+
+        <br>
+
+        <!-- 9 -->
+        <h2 style="color: var(--primary);">9. API Testing</h2>
+
+        <p>
+            API Testing verifies backend communication between systems.
+        </p>
+
+        <h3>Common Methods</h3>
+
+        <ul>
+            <li>GET</li>
+            <li>POST</li>
+            <li>PUT</li>
+            <li>DELETE</li>
+        </ul>
+
+        <h3>API Testing Tools</h3>
+
+        <ul>
+            <li>Postman</li>
+            <li>Swagger</li>
+            <li>JMeter</li>
+        </ul>
+
+        <br>
+
+        <!-- 10 -->
+        <h2 style="color: var(--primary);">10. Browser Testing</h2>
+
+        <ul>
+            <li>Google Chrome</li>
+            <li>Mozilla Firefox</li>
+            <li>Safari</li>
+            <li>Microsoft Edge</li>
+        </ul>
+
+        <br>
+
+        <!-- 11 -->
+        <h2 style="color: var(--primary);">11. Mobile App Testing</h2>
+
+        <ul>
+            <li>Installation Testing</li>
+            <li>UI Testing</li>
+            <li>Network Testing</li>
+            <li>Notification Testing</li>
+            <li>Permission Testing</li>
+            <li>Crash Testing</li>
+        </ul>
+
+        <br>
+
+        <!-- 12 -->
+        <h2 style="color: var(--primary);">12. Agile Methodology</h2>
+
+        <ul>
+            <li>Sprint Planning</li>
+            <li>Daily Standup</li>
+            <li>Sprint Review</li>
+            <li>Sprint Retrospective</li>
+        </ul>
+
+        <br>
+
+        <!-- 13 -->
+        <h2 style="color: var(--primary);">13. Jira Usage</h2>
+
+        <p>
+            JIRA is used for bug tracking and project management.
+        </p>
+
+        <h3>JIRA Workflow</h3>
+
+        <ul>
+            <li>Create Ticket</li>
+            <li>Assign Bug</li>
+            <li>Track Progress</li>
+            <li>Retest Fix</li>
+            <li>Close Ticket</li>
+        </ul>
+
+        <br>
+
+        <!-- 14 -->
+        <h2 style="color: var(--primary);">14. Real-Time Testing Scenarios</h2>
+
+        <ul>
+            <li>Login Page Testing</li>
+            <li>Signup Form Validation</li>
+            <li>Payment Gateway Testing</li>
+            <li>Search Functionality Testing</li>
+            <li>Shopping Cart Testing</li>
+            <li>OTP Verification Testing</li>
+            <li>Dashboard Testing</li>
+            <li>Inventory Testing</li>
+            <li>SIM Activation Testing</li>
+            <li>GPS Device Testing</li>
+        </ul>
+
+        <br>
+
+        <!-- 15 -->
+        <h2 style="color: var(--primary);">15. Manual Testing Interview Questions</h2>
+
+        <p><strong>Q: What is Manual Testing?</strong></p>
+        <p style="color: var(--text-muted);">
+            Manual Testing is the process of testing software manually without automation tools.
+        </p>
+
+        <br>
+
+        <p><strong>Q: Difference between Smoke and Sanity Testing?</strong></p>
+        <p style="color: var(--text-muted);">
+            Smoke testing checks major functionality, while sanity testing checks specific functionality after changes.
+        </p>
+
+        <br>
+
+        <p><strong>Q: What is Regression Testing?</strong></p>
+        <p style="color: var(--text-muted);">
+            Regression testing ensures existing features are not affected after new changes or bug fixes.
+        </p>
+
+        <br>
+
+        <p><strong>Q: What is a Bug?</strong></p>
+        <p style="color: var(--text-muted);">
+            A bug is a defect where actual result differs from expected result.
+        </p>
+
+        <br>
+
+        <p><strong>Q: What tools have you used?</strong></p>
+        <p style="color: var(--text-muted);">
+            JIRA, Postman, Browser DevTools, Grafana, and SQL databases.
+        </p>
+
+        <br>
+
+        <!-- 16 -->
+        <h2 style="color: var(--primary);">16. Best Practices for Testers</h2>
+
+        <ul>
+            <li>Understand requirements clearly</li>
+            <li>Write detailed test cases</li>
+            <li>Always verify bug fixes</li>
+            <li>Test edge cases</li>
+            <li>Maintain proper documentation</li>
+            <li>Communicate clearly with developers</li>
+            <li>Focus on user experience</li>
+        </ul>
+
+        <br>
+
+        <!-- 17 -->
+        <h2 style="color: var(--primary);">17. Conclusion</h2>
+
+        <p>
+            Manual testing is essential for delivering stable and high-quality software.
+            A skilled tester ensures better user experience, reduced production issues,
+            and reliable software releases.
+        </p>
+
+        <br><br>
+        <a href="index.html" class="neon-btn">
+            ← Back to Portfolio
+        </a>
+        <a href="manual-testing-3d.html" class="neon-btn">
+            Next button->
+
+        </a>
+       
+
+    </div>
+
+    <script>
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            if (dot)
+                dot.style.transform =
+                    `translate(${mouseX}px, ${mouseY}px)`;
+
+            if (outline)
+                outline.style.transform =
+                    `translate(${mouseX}px, ${mouseY}px)`;
+        });
+    </script>
+
+</body>
+
+</html>

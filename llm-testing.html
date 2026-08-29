@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Testing Handbook</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="padding:20px;">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="glass-card"
+        style="max-width:1000px; margin:auto; padding:40px; color:#fff;">
+
+        <h1 style="color: var(--primary); margin-bottom: 30px;">
+            Complete LLM Testing Handbook
+        </h1>
+
+        <!-- CI/CD -->
+<h2 style="color: var(--primary);">
+    7. CI/CD in LLM Testing
+</h2>
+
+<p>
+    CI/CD (Continuous Integration & Continuous Deployment)
+    helps automate testing and deployment processes for AI applications.
+</p>
+
+<h3>Why CI/CD is Important?</h3>
+
+<ul>
+    <li>Automates test execution</li>
+    <li>Reduces manual effort</li>
+    <li>Ensures faster releases</li>
+    <li>Improves software quality</li>
+    <li>Detects bugs early</li>
+</ul>
+
+<h3>CI/CD Workflow</h3>
+
+<ul>
+    <li>Developer pushes code to GitHub</li>
+    <li>Jenkins pipeline triggers automatically</li>
+    <li>Automation test cases execute</li>
+    <li>Reports are generated</li>
+    <li>Application deploys after successful testing</li>
+</ul>
+
+<br>
+
+<!-- JENKINS -->
+<h2 style="color: var(--primary);">
+    8. Jenkins in Automation Testing
+</h2>
+
+<p>
+    Jenkins is an open-source CI/CD tool used to automate
+    build, testing, and deployment processes.
+</p>
+
+<h3>Jenkins Features</h3>
+
+<ul>
+    <li>Automated test execution</li>
+    <li>Pipeline integration</li>
+    <li>Scheduled test runs</li>
+    <li>Real-time build monitoring</li>
+    <li>Integration with GitHub & Playwright</li>
+</ul>
+
+<h3>Real-Time Jenkins Usage</h3>
+
+<ul>
+    <li>Run Playwright automation suites</li>
+    <li>Execute API testing automatically</li>
+    <li>Generate HTML reports</li>
+    <li>Track failed test cases</li>
+    <li>Trigger builds after code commit</li>
+</ul>
+
+<br>
+
+<!-- PIPELINE -->
+<h2 style="color: var(--primary);">
+    9. Sample Jenkins Pipeline Flow
+</h2>
+
+<pre style="
+background: rgba(255,255,255,0.08);
+padding: 15px;
+border-radius: 10px;
+overflow-x:auto;
+color: #00ffcc;
+">
+
+GitHub Push
+     ↓
+Jenkins Trigger
+     ↓
+Install Dependencies
+     ↓
+Run Playwright Tests
+     ↓
+Generate Reports
+     ↓
+Pass / Fail Status
+     ↓
+Deployment
+
+</pre>
+
+        <!-- INTRO -->
+        <h2 style="color: var(--primary);">
+            1. Introduction to LLM Testing
+        </h2>
+
+        <p>
+            <strong>LLM Testing:</strong>
+            Testing AI/Chatbot systems to verify response accuracy,
+            context understanding, safety, and performance.
+        </p>
+
+        <p>
+            Large Language Models (LLMs) like ChatGPT, Gemini,
+            Claude, and AI Bots are tested to ensure reliable
+            and accurate responses.
+        </p>
+
+        <br>
+
+        <!-- WHY -->
+        <h2 style="color: var(--primary);">
+            2. Why LLM Testing is Important
+        </h2>
+
+        <ul>
+            <li>Improves AI response quality</li>
+            <li>Reduces hallucinated answers</li>
+            <li>Ensures context understanding</li>
+            <li>Improves user experience</li>
+            <li>Prevents harmful responses</li>
+            <li>Validates AI accuracy</li>
+        </ul>
+
+        <br>
+
+        <!-- TYPES -->
+        <h2 style="color: var(--primary);">
+            3. Types of LLM Testing
+        </h2>
+
+        <h3>Functional Testing</h3>
+        <p>
+            Verify chatbot answers according to prompts.
+        </p>
+
+        <h3>Context Testing</h3>
+        <p>
+            Check whether AI remembers previous conversation context.
+        </p>
+
+        <h3>Prompt Testing</h3>
+        <p>
+            Validate different prompts and response behavior.
+        </p>
+
+        <h3>Hallucination Testing</h3>
+        <p>
+            Verify AI does not generate fake or incorrect information.
+        </p>
+
+        <h3>Performance Testing</h3>
+        <p>
+            Measure response speed and stability under load.
+        </p>
+
+        <h3>Security Testing</h3>
+        <p>
+            Ensure AI avoids unsafe or restricted responses.
+        </p>
+
+        <br>
+
+        <!-- REAL TIME -->
+        <h2 style="color: var(--primary);">
+            4. Real-Time LLM Testing Scenarios
+        </h2>
+
+        <ul>
+            <li>AI Chatbot Conversation Testing</li>
+            <li>Prompt Validation Testing</li>
+            <li>Response Accuracy Testing</li>
+            <li>Context Retention Testing</li>
+            <li>Grammar & Language Validation</li>
+            <li>API Response Validation</li>
+            <li>Multi-turn Conversation Testing</li>
+            <li>Error Handling Testing</li>
+            <li>Unsafe Prompt Testing</li>
+            <li>Hallucination Detection</li>
+        </ul>
+
+        <br>
+
+        <!-- API -->
+        <h2 style="color: var(--primary);">
+            5. API Testing in LLM
+        </h2>
+
+        <p>
+            LLM APIs are tested using tools like Postman
+            and Playwright automation.
+        </p>
+
+        <h3>Common Methods</h3>
+
+        <ul>
+            <li>POST</li>
+            <li>GET</li>
+        </ul>
+
+        <h3>Validation Checks</h3>
+
+        <ul>
+            <li>Status Code Validation</li>
+            <li>Response Time Validation</li>
+            <li>JSON Response Validation</li>
+            <li>Token Validation</li>
+            <li>Error Message Validation</li>
+        </ul>
+
+        <br>
+
+        <!-- AUTOMATION -->
+        <h2 style="color: var(--primary);">
+            6. LLM Automation Testing
+        </h2>
+
+        <p>
+            Automation is used to validate chatbot conversations
+            and AI responses automatically.
+        </p>
+
+        <h3>Tools Used</h3>
+
+        <ul>
+            <li>Playwright</li>
+            <li>Python</li>
+            <li>Postman</li>
+            <li>Pytest</li>
+            <li>Jenkins</li>
+        </ul>
+
+        <br>
+
+        <!-- VIDEO -->
+        <h2 style="color: var(--primary);">
+            7. LLM Testing Demo Video
+        </h2>
+
+        <p>
+            Click below to watch the real-time AI chatbot testing demo video.
+        </p>
+
+        <a href="video/llm/compressed_llm.mp4"
+            target="_blank"
+            class="neon-btn">
+            ▶ Watch LLM Testing Video
+        </a>
+
+        <br><br>
+
+        <!-- INTERVIEW -->
+        <h2 style="color: var(--primary);">
+            8. LLM Testing Interview Questions
+        </h2>
+
+        <p><strong>Q: What is LLM Testing?</strong></p>
+
+        <p style="color: var(--text-muted);">
+            LLM Testing is the process of testing AI models and chatbots
+            for response accuracy, context handling, and safety.
+        </p>
+
+        <br>
+
+        <p><strong>Q: What is Hallucination in AI?</strong></p>
+
+        <p style="color: var(--text-muted);">
+            Hallucination occurs when AI generates incorrect
+            or fake information confidently.
+        </p>
+
+        <br>
+
+        <p><strong>Q: Which tools have you used?</strong></p>
+
+        <p style="color: var(--text-muted);">
+            Playwright, Python, Postman, Pytest, Jenkins,
+            and Browser DevTools.
+        </p>
+
+        <br>
+
+        <!-- BEST PRACTICES -->
+        <h2 style="color: var(--primary);">
+            9. Best Practices for LLM Testing
+        </h2>
+
+        <ul>
+            <li>Test multiple prompt variations</li>
+            <li>Validate AI response accuracy</li>
+            <li>Check context handling</li>
+            <li>Verify unsafe prompt handling</li>
+            <li>Monitor response consistency</li>
+            <li>Automate repetitive test cases</li>
+        </ul>
+
+        <br>
+
+        <!-- CONCLUSION -->
+        <h2 style="color: var(--primary);">
+            10. Conclusion
+        </h2>
+
+        <p>
+            LLM Testing helps ensure AI systems are accurate,
+            secure, reliable, and user-friendly.
+            Proper testing improves chatbot quality and
+            enhances user trust.
+        </p>
+
+        <br><br>
+
+        <a href="index.html" class="neon-btn">
+            ← Back to Portfolio
+        </a>
+
+    </div>
+
+    <script>
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            if (dot)
+                dot.style.transform =
+                `translate(${mouseX}px, ${mouseY}px)`;
+
+            if (outline)
+                outline.style.transform =
+                `translate(${mouseX}px, ${mouseY}px)`;
+        });
+    </script>
+
+</body>
+
+</html>

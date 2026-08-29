@@ -1,0 +1,1176 @@
+/* =========================================
+   00. VARIABLES & FONTS
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-dark: #050505;
+    --text-light: #e0e0e0;
+    --text-muted: #888888;
+    --neon-cyan: #00f3ff;
+    --neon-green: #00ff66;
+    --neon-purple: #bc13fe;
+    
+    --glass-bg: rgba(20, 20, 20, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    
+    --font-main: 'Rajdhani', sans-serif;
+    --font-mono: 'Fira Code', monospace;
+}
+
+/* =========================================
+   01. RESET & BASE STYLES
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    /* FIX: Changed height to min-height to allow natural scrolling */
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    /* Enables smooth momentum scrolling on mobile devices */
+    -webkit-overflow-scrolling: touch; 
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    cursor: none; /* Hidden for custom cursor on desktop */
+}
+
+section {
+    padding: 6rem 10%;
+    position: relative;
+    z-index: 2;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   02. CUSTOM CURSOR
+   ========================================= */
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--neon-cyan);
+    position: fixed;
+    top: 0; left: 0;
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 243, 255, 0.5);
+    position: fixed;
+    top: 0; left: 0;
+    border-radius: 50%;
+    z-index: 9998;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+/* Hide custom cursor on touch devices to prevent issues */
+@media (hover: none) and (pointer: coarse) {
+    .cursor-dot, .cursor-outline {
+        display: none !important;
+    }
+    body {
+        cursor: auto;
+    }
+}
+
+/* =========================================
+   03. VIDEO BACKGROUND & OVERLAY
+   ========================================= */
+.video-bg {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover !important; 
+    transform: translate(-50%, -50%); 
+    z-index: -100;
+    opacity: 0.4;
+    background-color: #0b0f19;
+}
+
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.9) 100%);
+    z-index: -99;
+}
+
+/* =========================================
+   04. PRELOADER (TERMINAL)
+   ========================================= */
+#preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #000;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease-out;
+}
+
+.terminal-loader {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+.loader-text {
+    opacity: 0;
+    animation: fadeInStep 0.5s forwards;
+}
+
+.loader-text:nth-child(1) { animation-delay: 0.5s; }
+.loader-text:nth-child(2) { animation-delay: 1.5s; }
+.loader-text:nth-child(3) { animation-delay: 2.5s; }
+.success-text {
+    color: var(--neon-green);
+    animation-delay: 3.5s !important;
+}
+
+@keyframes fadeInStep {
+    to { opacity: 1; }
+}
+
+/* =========================================
+   05. TYPOGRAPHY & HEADER
+   ========================================= */
+header {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    background: transparent !important;
+}
+
+.hero-content {
+    width: 50vw; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.greeting {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    color: var(--neon-cyan);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    margin: 20px 0 40px;
+}
+
+.typewriter-container {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    color: var(--neon-green);
+    height: 30px; 
+}
+
+.cursor-blink, .typewriter-cursor {
+    background-color: var(--neon-green);
+    animation: blink 1s infinite;
+    display: inline-block;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* =========================================
+   06. GLITCH EFFECT
+   ========================================= */
+.glitch {
+    font-size: 5rem;
+    font-weight: 700;
+    position: relative;
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.glitch::before {
+    left: 3px;
+    text-shadow: -2px 0 var(--neon-cyan);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -3px;
+    text-shadow: -2px 0 var(--neon-purple);
+    clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(20% 0 80% 0); }
+    20% { clip-path: inset(60% 0 10% 0); }
+    40% { clip-path: inset(40% 0 50% 0); }
+    60% { clip-path: inset(80% 0 5% 0); }
+    80% { clip-path: inset(10% 0 70% 0); }
+    100% { clip-path: inset(30% 0 50% 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(10% 0 60% 0); }
+    20% { clip-path: inset(30% 0 20% 0); }
+    40% { clip-path: inset(70% 0 10% 0); }
+    60% { clip-path: inset(20% 0 50% 0); }
+    80% { clip-path: inset(50% 0 30% 0); }
+    100% { clip-path: inset(5% 0 80% 0); }
+}
+
+/* =========================================
+   07. NEON BUTTONS
+   ========================================= */
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+/* =========================================
+   PREMIUM FUTURISTIC BUTTON (NEON-BTN)
+   ========================================= */
+
+/* 1. Base Styling & Alive Pulse Animation */
+.neon-btn {
+    position: relative;
+    display: inline-flex; 
+    justify-content: center;
+    align-items: center;
+    padding: 12px 32px;
+    color: #ffffff; /* Crisp white text for readability */
+    font-family: var(--font-mono, monospace);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    
+    /* Dark glass background with cyan tint */
+    background: rgba(0, 243, 255, 0.05); 
+    border: 1px solid rgba(0, 243, 255, 0.4);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 1;
+    
+    /* Smooth transition for all hover effects */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Continuous subtle glowing pulse to attract clicks */
+    animation: button-pulse 2.5s infinite alternate;
+}
+
+/* 2. Holographic Light Sweep (Hidden by default) */
+.neon-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* Hidden on the left side */
+    width: 100%;
+    height: 100%;
+    /* Gradient laser effect */
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 243, 255, 0.6),
+        transparent
+    );
+    transition: all 0.6s ease;
+    z-index: -1;
+}
+
+/* 3. Hover Interaction - The "Click Me" Magic */
+.neon-btn:hover {
+    background: rgba(0, 243, 255, 0.15); /* Slightly brighter glass */
+    border-color: #00f3ff; /* Solid neon border */
+    color: #ffffff;
+    
+    /* Pops the button up and scales it slightly */
+    transform: translateY(-4px) scale(1.02);
+    
+    /* Intense futuristic glow */
+    box-shadow:
+        0 0 15px rgba(0, 243, 255, 0.4),
+        0 0 30px rgba(0, 243, 255, 0.2),
+        inset 0 0 15px rgba(0, 243, 255, 0.3);
+        
+    text-shadow: 0 0 8px #00f3ff;
+}
+
+/* Trigger the light sweep animation on hover */
+.neon-btn:hover::before {
+    left: 100%; /* Moves the laser from left to right */
+}
+
+/* 4. Keyframes for the continuous alive pulse */
+@keyframes button-pulse {
+    0% { 
+        box-shadow: 0 0 5px rgba(0, 243, 255, 0.1), inset 0 0 5px rgba(0, 243, 255, 0.1); 
+    }
+    100% { 
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.2); 
+    }
+}
+
+.details-btn { 
+    margin-top: 15px; 
+    font-size: 0.85rem; 
+    padding: 8px 20px; 
+}
+
+/* =========================================
+   08. GLASSMORPHISM CARDS & LAYOUT
+   ========================================= */
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title span {
+    font-family: var(--font-mono);
+    color: var(--neon-cyan);
+    font-size: 1.5rem;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(0, 243, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+.full-width { 
+    width: 100%; 
+    max-width: 900px; 
+    margin: 0 auto; 
+}
+
+.about-text { 
+    font-size: 1.1rem; 
+    color: #ccc; 
+}
+
+/* Grid layout update for compact cards */
+.skills-grid, .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+    gap: 1rem; 
+}
+
+/* Common card layout and padding */
+.skill-card, .project-card {
+    padding: 1rem; 
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+.skill-card { 
+    text-align: center; 
+}
+
+.skill-card .icon { 
+    font-size: 2rem; 
+    margin-bottom: 0.8rem; 
+}
+
+/* Heading styling */
+.skill-card h3, .project-card h3 {
+    font-size: 0.95rem; 
+    margin-bottom: 0.8rem;
+    white-space: normal; 
+    overflow-wrap: break-word; 
+    word-wrap: break-word; 
+    line-height: 1.4;
+}
+
+.skill-card h3 { color: var(--neon-cyan); }
+.project-card h3 { color: var(--text-light); }
+
+/* Paragraph styling and Flexbox space distribution */
+.skill-card p, .project-card p {
+    font-size: 0.8rem; 
+    color: var(--text-muted); 
+    line-height: 1.4;
+    flex-grow: 1; /* Expands text area to push button down */
+    margin-bottom: 1.5rem; 
+}
+
+/* Force buttons to align at the absolute bottom */
+.project-card .neon-btn, .skill-card .neon-btn {
+    margin-top: auto; 
+    align-self: flex-start; 
+}
+
+.skill-card .neon-btn {
+    align-self: center;
+}
+
+.exp-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 1.5rem; 
+    border-bottom: 1px solid var(--glass-border); 
+    padding-bottom: 1rem; 
+}
+.exp-header h3 { color: var(--neon-cyan); }
+.exp-header .company { 
+    font-family: var(--font-mono); 
+    font-size: 0.9rem; 
+    color: var(--neon-green); 
+}
+.experience-card ul { list-style: none; padding-left: 0; }
+.experience-card li { 
+    margin-bottom: 1rem; 
+    color: #ccc; 
+    position: relative; 
+    padding-left: 20px; 
+}
+.experience-card li::before { 
+    content: '>'; 
+    position: absolute; 
+    left: 0; 
+    color: var(--neon-cyan); 
+    font-family: var(--font-mono); 
+}
+
+/* =========================================
+   09. CTA & FOOTER
+   ========================================= */
+.cta-card { text-align: center; max-width: 700px; margin: 0 auto; }
+.cta-card h2 { color: var(--neon-cyan); margin-bottom: 1rem; }
+.eng-text { font-family: var(--font-mono); color: var(--text-muted); margin: 1rem 0 2rem; }
+
+footer { 
+    text-align: center; 
+    padding: 3rem 10%; 
+    border-top: 1px solid var(--glass-border); 
+    position: relative; 
+    z-index: 2; 
+    margin-top: 4rem; 
+}
+.social-links { margin-bottom: 1.5rem; }
+.social-links a { 
+    color: var(--neon-cyan); 
+    text-decoration: none; 
+    margin: 0 15px; 
+    font-family: var(--font-mono); 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    transition: color 0.3s; 
+}
+.social-links a:hover { 
+    color: var(--text-light); 
+    text-shadow: 0 0 10px var(--neon-cyan); 
+}
+.copyright { 
+    margin-top: 1rem; 
+    font-family: var(--font-mono); 
+    font-size: 0.8rem; 
+    color: var(--text-muted); 
+}
+
+/* =========================================
+   10. JS ANIMATION PREP CLASSES
+   ========================================= */
+.hidden-fade { opacity: 0; transition: opacity 1s ease-out; }
+.hidden-3d { 
+    opacity: 0; 
+    transform: translateY(50px) rotateX(-10deg); 
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+.show { opacity: 1; transform: translateY(0) rotateX(0); }
+
+/* =========================================
+   11. LOGO STYLING (ROTATING GLOBE)
+   ========================================= */
+.logo-container {
+    position: fixed;
+    top: 30px;
+    left: 40px; 
+    z-index: 100;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 60px; 
+    width: 60px;
+    object-fit: cover; 
+    border-radius: 50%; 
+    display: block;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); 
+}
+
+.rotate-globe {
+    animation: spinEarth 15s linear infinite; 
+}
+
+@keyframes spinEarth {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.logo-container:hover .rotate-globe {
+    animation-duration: 3s; 
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.8); 
+}
+
+/* =========================================
+   12. PARTICLES & FLOATING TOOLS
+   ========================================= */
+#log-container {
+    pointer-events: none; 
+    z-index: 10; 
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.floating-tool {
+    cursor: crosshair !important; 
+    pointer-events: auto !important; 
+    z-index: 100 !important; 
+    position: absolute;
+    bottom: -50px;
+    color: rgba(255, 255, 255, 0.15);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    user-select: none;
+    will-change: transform, bottom;
+    transition: color 0.2s ease, transform 0.2s ease; 
+    animation: floatUp linear forwards, sway 4s ease-in-out alternate infinite;
+}
+
+.floating-tool:hover {
+    color: #fff !important;
+    text-shadow: 0 0 10px #00f3ff;
+    transform: scale(1.1); 
+}
+
+@keyframes floatUp {
+    0% { bottom: -50px; opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { bottom: 110vh; opacity: 0; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-30px); }
+    100% { transform: translateX(30px); }
+}
+
+.particle {
+    position: absolute;
+    width: 6px; 
+    height: 6px;
+    border-radius: 50%; 
+    pointer-events: none; 
+    z-index: 9999; 
+    animation: explode-particle 0.6s cubic-bezier(0, 0.9, 0.9, 1) forwards;
+}
+
+@keyframes explode-particle {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* =========================================
+   13. RESPONSIVE (MOBILE FIXES)
+   ========================================= */
+@media (max-width: 768px) {
+    /* SCROLL FIX REMOVED 100vh TRAP FROM HERE */
+    
+    header { 
+        justify-content: center; 
+    }
+    
+    .hero-content { 
+        width: 100vw; 
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+    .video-bg {
+        object-fit: cover !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        position: fixed;
+    }
+    
+    .video-overlay { 
+        width: 100vw; 
+        height: 100vh; 
+    }
+    
+    h1, .hero-title, .glitch { 
+        font-size: 2.5rem !important; 
+        margin-bottom: 10px !important;
+    }
+    
+    /* OVERLAPPING TEXT FIX */
+    .typewriter-container {
+        height: auto !important; 
+        min-height: 60px !important; 
+        margin-bottom: 10px !important; 
+        display: block; 
+    }
+
+    #typewriter {
+        font-size: 1.1rem !important;
+        line-height: 1.5 !important;
+        white-space: normal; 
+    }
+
+    .cursor-blink, .typewriter-cursor {
+        height: 1.2rem !important;
+        width: 8px !important;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .subtitle { 
+        font-size: 1rem !important; 
+        margin-top: 15px !important; 
+        line-height: 1.5 !important;
+        padding: 0 15px;
+    }
+    
+    section { padding: 4rem 5%; }
+    
+    .exp-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    
+    .logo-container { top: 20px; left: 20px; }
+    .logo-img { height: 45px; width: 45px; }
+
+    .main-container, .content-wrapper, main, header {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* MOBILE BUTTONS POSITIONING FIX */
+    .contact-links {
+        flex-direction: column !important; 
+        gap: 15px !important; 
+        width: 100% !important;
+        align-items: center !important;
+        margin-top: 25px !important;
+    }
+
+    .contact-links .neon-btn {
+        width: 85% !important; 
+        text-align: center;
+        justify-content: center;
+        padding: 12px 20px !important;
+        font-size: 0.95rem !important;
+    }
+    
+    #download-count {
+        font-size: 0.8rem !important;
+        margin-left: 5px;
+    }
+
+    /* CARDS SINGLE COLUMN ON MOBILE */
+    .skills-grid, .project-grid {
+        grid-template-columns: 1fr; 
+        gap: 1rem; 
+    }
+    
+    .skill-card, .project-card {
+        padding: 1.5rem; 
+    }
+}
+
+/* =========================================
+   14. LOGIN & REGISTER SYSTEM (AUTH)
+   ========================================= */
+.auth-container {
+    position: fixed;
+    top: 30px;
+    right: 40px;
+    z-index: 100;
+    display: flex;
+    gap: 15px;
+}
+
+.auth-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 5, 5, 0.85); 
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* When form is active */
+.auth-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.auth-box {
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    text-align: center;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    color: var(--text-light);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: border 0.3s;
+}
+
+.auth-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--neon-cyan);
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+    color: #fff;
+}
+/* =========================================
+   AUTH MODAL CURSOR FIX
+========================================= */
+
+/* 1. Restore default arrow cursor on the modal background */
+#auth-modal {
+    cursor: default !important; 
+}
+
+/* 2. Set text cursor for Email and Password input fields */
+#auth-modal input {
+    cursor: text !important;
+}
+
+/* 3. Set pointer (hand icon) cursor for all buttons and links */
+#auth-modal button,
+#auth-modal a,
+#auth-toggle-link,
+.close-btn,
+#google-auth-btn {
+    cursor: pointer !important;
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        top: 20px;
+        right: 20px;
+        gap: 10px;
+    }
+    .auth-container .neon-btn {
+        padding: 6px 10px !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* GOOGLE SIGN-IN BUTTON STYLE */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.google-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+
+.google-btn img {
+    display: block;
+}
+
+/* =========================================
+   15. CHATBOT SYSTEM
+   ========================================= */
+.chat-container {
+    width: 350px;
+    background-color: #ffffff !important;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5) !important; 
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    z-index: 999999 !important; 
+    opacity: 1 !important; 
+    isolation: isolate !important; 
+    mix-blend-mode: normal !important; 
+    backdrop-filter: none !important; 
+    filter: none !important;
+    cursor: default !important; /* Prevents custom cursor from hiding native cursor */
+}
+
+.chat-header {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2 !important;
+}
+
+.chat-box {
+    height: 400px;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-behavior: smooth;
+    background-color: #ffffff !important;
+}
+
+.message {
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.user-message {
+    background: #007bff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.bot-message {
+    background: #f1f1f1;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #ffffff !important;
+    z-index: 2 !important;
+}
+
+.input-area input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+    background-color: #ffffff !important;
+    color: #333 !important;
+}
+
+.input-area input:focus {
+    border-color: #007bff;
+}
+
+/* SEND MESSAGE BUTTON */
+.input-area button {
+    background-color: #007bff !important;
+    color: white !important;
+    border: none;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 50%;
+    cursor: pointer !important; 
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.input-area button:hover {
+    background-color: #0056b3 !important; 
+    transform: scale(1.1) !important; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+
+/* HEADER CLOSE BUTTON */
+.chat-header .close-btn {
+    cursor: pointer !important; 
+    font-size: 18px;
+    transition: all 0.2s ease-in-out !important;
+    padding: 0 5px;
+    position: static; 
+}
+
+.chat-header .close-btn:hover {
+    color: #ffcccc !important; 
+    transform: scale(1.2) !important; 
+}
+
+/* MAIN CHAT TOGGLE BUTTON */
+#chat-toggle-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #007bff !important;
+    color: white !important;
+    border: none;
+    font-size: 28px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+    cursor: pointer !important; 
+    z-index: 999998 !important; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out !important;
+}
+
+#chat-toggle-btn:hover {
+    background-color: #0056b3 !important;
+    transform: scale(1.15) !important;
+}
+
+/* =========================================
+   BUG TRACKER CARDS STYLING (HORIZONTAL SCROLL)
+========================================= */
+.bug-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 25px;
+    padding: 10px 10px 30px 10px; /* Bottom padding for the scrollbar */
+    scroll-snap-type: x mandatory; /* Smooth snapping effect */
+    scroll-behavior: smooth;
+}
+
+/* Custom Neon Scrollbar for Bug Grid */
+.bug-grid::-webkit-scrollbar {
+    height: 8px;
+}
+.bug-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+.bug-grid::-webkit-scrollbar-thumb {
+    background: rgba(0, 243, 255, 0.3);
+    border-radius: 10px;
+    transition: 0.3s;
+}
+.bug-grid::-webkit-scrollbar-thumb:hover {
+    background: #00f3ff; /* Glow on hover */
+}
+
+/* BUG CARD STYLING */
+.bug-card {
+    flex: 0 0 320px; /* Fixed width so cards don't shrink */
+    scroll-snap-align: start; /* Snaps perfectly when scrolling */
+    background: rgba(10, 15, 30, 0.6);
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Default Hover Effect for Bug Cards (Cyan/Blue) */
+.bug-card:hover {
+    transform: translateY(-5px);
+    border-color: #00f3ff;
+    box-shadow: 0 8px 25px rgba(0, 243, 255, 0.2);
+}
+
+/* --- AUTO-GREEN GLOW FOR FIXED BUGS --- */
+.bug-card:has(.badge-fixed) {
+    border: 1px solid rgba(0, 255, 136, 0.4); 
+    background: rgba(0, 255, 136, 0.05); 
+}
+.bug-card:has(.badge-fixed):hover {
+    border-color: #00ff88;
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.25);
+}
+/* -------------------------------------- */
+
+.bug-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.bug-id {
+    font-weight: bold;
+    color: #8892b0;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.bug-title {
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.bug-desc {
+    color: #a8b2d1;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.bug-footer {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 10px;
+}
+
+/* --- BADGES (Status) --- */
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.badge-fixed { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid #00ff88; }
+.badge-open { background: rgba(255, 68, 68, 0.1); color: #ff4444; border: 1px solid #ff4444; }
+.badge-progress { background: rgba(255, 170, 0, 0.1); color: #ffaa00; border: 1px solid #ffaa00; }
+
+/* --- SEVERITY LABELS --- */
+.severity {
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: monospace;
+}
+.severity-high { color: #ff4444; }
+.severity-medium { color: #ffaa00; }
+.severity-low { color: #00f3ff; }

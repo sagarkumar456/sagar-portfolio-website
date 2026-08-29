@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Automation Learning Dashboard | Cyberpunk Server</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    /* 🌐 ANIMATED CYBER FLOOR GRID */
+.content::before {
+    content: '';
+    position: absolute;
+    bottom: -50%; left: -50%; width: 200%; height: 200%;
+    background-image: linear-gradient(rgba(0, 255, 170, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 170, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform: rotateX(75deg) translateZ(-200px);
+    animation: gridMove 10s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes gridMove {
+    0% { transform: rotateX(75deg) translateZ(-200px) translateY(0); }
+    100% { transform: rotateX(75deg) translateZ(-200px) translateY(40px); }
+}
+
+/* ⚡ CYBERPUNK GLITCH EFFECT */
+.glitch {
+    position: relative;
+    animation: glitchAnim 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes glitchAnim {
+    0% { transform: translate(0); opacity: 0; filter: drop-shadow(0 0 10px #00ffaa); }
+    20% { transform: translate(-5px, 5px); opacity: 1; text-shadow: 2px 0 #ff0055, -2px 0 #007fff; }
+    40% { transform: translate(-5px, -5px); text-shadow: -2px 0 #ff0055, 2px 0 #007fff; }
+    60% { transform: translate(5px, 5px); text-shadow: 2px 0 #ff0055, -2px 0 #007fff; }
+    80% { transform: translate(5px, -5px); text-shadow: -2px 0 #ff0055, 2px 0 #007fff; }
+    100% { transform: translate(0); text-shadow: none; }
+}
+
+/* 🔌 POWER SURGE FOR SERVER */
+.power-surge .blink-light {
+    animation: surge 0.5s ease-out;
+    box-shadow: 0 0 30px #fff, 0 0 50px #00ffaa;
+    background: #fff;
+}
+@keyframes surge {
+    0% { transform: scale(1); }
+    50% { transform: scale(2); }
+    100% { transform: scale(1); }
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body { background: #02040a; overflow: hidden; color: #e2e8f0; }
+
+.container { width: 100%; height: 100vh; display: flex; }
+
+/* SIDEBAR (Glassmorphism) */
+.sidebar { width: 300px; background: rgba(5, 10, 20, 0.85); backdrop-filter: blur(20px); border-right: 1px solid rgba(0, 255, 170, 0.2); padding: 30px 25px; display: flex; flex-direction: column; justify-content: space-between; z-index: 10; }
+.logo { font-size: 32px; font-weight: 700; color: #00ffaa; text-shadow: 0 0 15px rgba(0,255,170,0.5); }
+.logo span { color: #fff; }
+.course { color: #94a3b8; margin-top: 5px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+
+.progress-title { margin-top: 40px; color: #94a3b8; font-size: 12px; letter-spacing: 2px; }
+.progress { width: 100%; height: 8px; background: #1e293b; border-radius: 20px; margin-top: 10px; overflow: hidden; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
+.progress-bar { width: 20%; height: 100%; background: linear-gradient(90deg, #007fff, #00ffaa); box-shadow: 0 0 15px rgba(0, 255, 170, 0.8); transition: 0.5s ease-out; }
+
+/* MENU */
+.menu { margin-top: 40px; }
+.menu-item { display: flex; align-items: center; gap: 15px; padding: 15px; margin-bottom: 12px; border-radius: 12px; transition: .4s; cursor: pointer; color: #cbd5e1; border: 1px solid transparent; }
+.menu-item:hover { background: rgba(0, 255, 170, 0.05); border-color: rgba(0, 255, 170, 0.2); transform: translateX(8px); }
+.menu-item.active { background: rgba(0, 255, 170, 0.1); border-color: #00ffaa; color: #fff; box-shadow: 0 0 20px rgba(0, 255, 170, 0.15); }
+.number { width: 32px; height: 32px; border-radius: 8px; background: #0f172a; display: flex; justify-content: center; align-items: center; font-weight: 600; transition: 0.3s; font-family: 'Fira Code', monospace; }
+.menu-item.active .number { background: #00ffaa; color: #000; box-shadow: 0 0 10px #00ffaa; }
+
+/* PROFILE */
+.profile { background: rgba(0,0,0,0.4); border-radius: 20px; padding: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.05); }
+.avatar { width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, #00ffaa, #007fff); display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 0 15px rgba(0,255,170,0.3); }
+.profile h3 { font-size: 16px; color: #fff; }
+.profile p { font-size: 12px; color: #00ffaa; font-family: 'Fira Code', monospace; }
+
+/* CONTENT & 3D PERSPECTIVE */
+.content { flex: 1; padding: 40px 60px; position: relative; perspective: 1800px; background: radial-gradient(circle at 75% 50%, #06101e 0%, #02040a 100%); }
+
+/* TOPBAR */
+.topbar { display: flex; justify-content: flex-end; gap: 20px; position: relative; z-index: 5; }
+.chapter { background: rgba(0, 255, 170, 0.1); color: #00ffaa; padding: 12px 25px; border-radius: 8px; font-weight: 600; border: 1px solid rgba(0,255,170,0.3); letter-spacing: 1px; font-family: 'Fira Code', monospace; }
+.dark-btn { padding: 12px 25px; border-radius: 8px; background: transparent; border: 1px solid #007fff; color: #007fff; cursor: pointer; font-family: 'Fira Code'; transition: 0.3s; }
+.dark-btn:hover { background: #007fff; color: #fff; box-shadow: 0 0 15px rgba(0,127,255,0.5); }
+
+/* TITLE & TEXT */
+.title { font-size: 48px; color: #fff; margin-top: 30px; transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); text-shadow: 0 0 20px rgba(0,255,170,0.2); }
+.description-box { width: 550px; background: rgba(10, 15, 30, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(0, 255, 170, 0.15); border-radius: 20px; padding: 35px; margin-top: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative; z-index: 5; }
+.description-box p { font-size: 17px; line-height: 1.8; color: #cbd5e1; transition: 0.6s; }
+.list { margin-top: 25px; }
+.list li { margin-bottom: 15px; font-size: 15px; color: #f1f5f9; list-style: none; display: flex; align-items: center; gap: 12px; font-family: 'Fira Code', monospace; }
+.list li span { color: #00ffaa; text-shadow: 0 0 8px #00ffaa; }
+
+/* 📊 HOLOGRAPHIC BOARD (Jenkins Build Status) */
+.board { position: absolute; top: 80px; right: 120px; width: 360px; height: 210px; background: rgba(0, 255, 170, 0.03); border: 2px solid rgba(0, 255, 170, 0.2); border-radius: 15px; padding: 20px; box-shadow: 0 0 30px rgba(0, 255, 170, 0.1), inset 0 0 20px rgba(0, 255, 170, 0.05); transform: rotateY(-20deg) translateZ(-150px); backdrop-filter: blur(5px); }
+.board::before { content: 'JENKINS PIPELINE: SUCCESS'; position: absolute; top: -12px; left: 20px; background: #02040a; color: #00ffaa; font-family: 'Fira Code'; font-size: 12px; padding: 0 10px; font-weight: bold; }
+.holo-data { color: #fff; font-family: 'Fira Code', monospace; margin-top: 15px; font-size: 14px; }
+.holo-data div { margin-bottom: 12px; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px; }
+.holo-data span { color: #00ffaa; text-shadow: 0 0 10px #00ffaa; }
+.holo-data .failed { color: #ff0055; text-shadow: 0 0 10px #ff0055; }
+
+/* 🖥️ AUTOMATION SERVER ROOM SCENE */
+.office { position: absolute; right: 50px; bottom: 30px; width: 800px; height: 600px; transform-style: preserve-3d; }
+
+/* MAIN SERVER RACK */
+.server-rack { width: 300px; height: 400px; background: #0b1120; border: 4px solid #1e293b; border-radius: 10px; position: absolute; left: 100px; bottom: 80px; transform: translateZ(50px); box-shadow: 20px 20px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,1); display: flex; flex-direction: column; padding: 10px; gap: 8px; }
+.server-slot { flex: 1; background: #030712; border: 1px solid #1e293b; border-radius: 4px; position: relative; overflow: hidden; display: flex; align-items: center; padding: 0 15px; gap: 10px; }
+.blink-light { width: 8px; height: 8px; border-radius: 50%; background: #00ffaa; box-shadow: 0 0 10px #00ffaa; animation: blinkFast 0.5s infinite alternate; }
+.blink-light:nth-child(2) { background: #007fff; box-shadow: 0 0 10px #007fff; animation-delay: 0.2s; }
+.blink-light:nth-child(3) { background: #ff0055; box-shadow: 0 0 10px #ff0055; animation: blinkSlow 1.5s infinite; }
+.server-slot::after { content: ''; width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: absolute; top: 50%; left: 0; }
+
+/* GLOWING WORKSTATION TABLE */
+.table { width: 500px; height: 15px; background: #0f172a; border-radius: 8px; position: absolute; left: 250px; bottom: 180px; box-shadow: 0 30px 50px rgba(0,0,0,0.9); transform: translateZ(100px); border-bottom: 2px solid #007fff; }
+
+/* WIDE AUTOMATION MONITOR */
+.monitor-wide { width: 380px; height: 200px; background: #030712; border-radius: 10px; position: absolute; top: -180px; left: 60px; border: 3px solid #1e293b; border-bottom: 15px solid #0b1120; transform-style: preserve-3d; box-shadow: 0 15px 30px rgba(0,0,0,0.8), 0 0 40px rgba(0, 255, 170, 0.15); transform: rotateY(-10deg); }
+.monitor-wide::after { content:''; position:absolute; bottom:-45px; left:50%; transform:translateX(-50%); width:40px; height:45px; background:#1e293b; }
+
+.screen { padding: 15px; height: 100%; background: #010308; border-radius: 4px; overflow: hidden; position: relative; font-family: 'Fira Code', monospace; }
+/* Glass reflection */
+.screen::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%); pointer-events:none; }
+
+/* 📜 Fast Scrolling Automation Code Logs */
+.code-container { width: 100%; height: 200%; animation: scrollCode 3s linear infinite; display: flex; flex-direction: column; gap: 6px; }
+@keyframes scrollCode { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+.log { font-size: 8px; color: #00ffaa; white-space: nowrap; opacity: 0.8; }
+.log.err { color: #ff0055; }
+.log.warn { color: #ffcc00; }
+.log.info { color: #007fff; }
+
+/* ANIMATIONS */
+@keyframes blinkFast { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+@keyframes blinkSlow { 0%, 90% { opacity: 0; } 100% { opacity: 1; } }
+
+/* BUTTONS */
+.controls { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); background: rgba(5, 10, 20, 0.8); backdrop-filter: blur(10px); padding: 12px 25px; border-radius: 60px; display: flex; gap: 20px; align-items: center; border: 1px solid rgba(0,255,170,0.2); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+.btn { padding: 12px 35px; border: 1px solid #00ffaa; border-radius: 50px; background: transparent; color: #00ffaa; font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+.btn:hover { background: #00ffaa; color: #000; box-shadow: 0 0 20px rgba(0, 255, 170, 0.6); transform: translateY(-2px); }
+
+/* TIP / TERMINAL */
+.tip { position: absolute; right: 40px; bottom: 40px; width: 320px; background: rgba(0,0,0,0.7); border: 1px solid #1e293b; border-left: 4px solid #007fff; border-radius: 10px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); transform: translateZ(80px); transition: 0.5s; backdrop-filter: blur(5px); }
+.tip:hover { transform: translateZ(100px) translateY(-5px); border-left-color: #00ffaa; }
+.tip h3 { color: #fff; margin-bottom: 12px; font-family: 'Fira Code', monospace; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+.tip h3::before { content: '>_'; color: #007fff; }
+.tip p { line-height: 1.6; color: #94a3b8; font-size: 13px; font-family: 'Fira Code', monospace; }
+
+@media(max-width:900px){
+    body { overflow: auto; }
+    .container { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(0,255,170,0.1); }
+    .content { padding: 20px; }
+    .office { position: relative; transform: scale(0.6) translateZ(0) !important; right: 0; bottom: 0; margin-top: 50px; }
+    .description-box, .tip { width: 100%; position: relative; right: 0; bottom: 0; transform: none !important; margin-bottom: 20px; }
+    .board { display: none; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    
+    <div class="sidebar">
+        <div>
+            <div class="logo">AUTO <span>MATRIX</span></div>
+            <div class="course">Playwright & CI/CD Core</div>
+            <div class="progress-title">SCRIPT EXECUTION</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <div class="menu">
+                <div class="menu-item active"><div class="number">01</div>Auto Basics</div>
+                <div class="menu-item"><div class="number">02</div>Playwright</div>
+                <div class="menu-item"><div class="number">03</div>POM Design</div>
+                <div class="menu-item"><div class="number">04</div>Pytest & BDD</div>
+                <div class="menu-item"><div class="number">05</div>Jenkins CI/CD</div>
+            </div>
+        </div>
+        <div class="profile">
+            <div class="avatar">⚙️</div>
+            <div>
+                <h3>Sagar Kumar</h3>
+                <p>SDET Architect</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="topbar">
+            <div class="chapter">TEST: 01 // 05</div>
+            <button id="sound-toggle" class="dark-btn">🔇 JARVIS: OFF</button>
+        </div>
+
+        <h1 class="title">What is Automation?</h1>
+        <div class="description-box">
+            <p>Automation Testing uses software scripts to execute repetitive test scenarios automatically, eliminating human error and increasing coverage.</p>
+            <ul class="list">
+                <li><span>[RUN]</span> 100x Faster than manual execution.</li>
+                <li><span>[RUN]</span> Executes parallel across multiple browsers.</li>
+                <li><span>[RUN]</span> Integrated directly into code deployment pipelines.</li>
+                <li><span>[RUN]</span> Ideal for extensive Regression testing suites.</li>
+            </ul>
+        </div>
+
+        <div class="board">
+            <div class="holo-data">
+                <div>Total Tests Executed: <span>1,402</span></div>
+                <div>Passed: <span>1,402</span></div>
+                <div>Failed: <span class="failed">0</span></div>
+                <div>Execution Time: <span class="info">4.2 mins</span></div>
+                <div>Coverage: <span>98.8%</span></div>
+            </div>
+        </div>
+
+        <div class="office" id="scene">
+            <div class="server-rack">
+                <div class="server-slot"><div class="blink-light"></div><div class="blink-light"></div><div class="blink-light"></div></div>
+                <div class="server-slot"><div class="blink-light"></div><div class="blink-light"></div></div>
+                <div class="server-slot"><div class="blink-light"></div><div class="blink-light"></div><div class="blink-light"></div></div>
+                <div class="server-slot"><div class="blink-light"></div></div>
+                <div class="server-slot"><div class="blink-light"></div><div class="blink-light"></div></div>
+            </div>
+
+            <div class="table">
+                <div class="monitor-wide">
+                    <div class="screen">
+                        <div class="code-container">
+                            <div class="log info">pytest tests/test_login.py --browser=chromium -n 4</div>
+                            <div class="log">[PASS] test_valid_login (0.23s)</div>
+                            <div class="log">[PASS] test_invalid_login (0.19s)</div>
+                            <div class="log warn">[WARN] auto-wait triggered for locator '#submit'</div>
+                            <div class="log">[PASS] test_password_masking (0.12s)</div>
+                            <div class="log pink">[API] Mocking response for /api/v1/users...</div>
+                            <div class="log">[PASS] test_dashboard_load (0.45s)</div>
+                            <div class="log info">pytest tests/test_login.py --browser=chromium -n 4</div>
+                            <div class="log">[PASS] test_valid_login (0.23s)</div>
+                            <div class="log">[PASS] test_invalid_login (0.19s)</div>
+                            <div class="log warn">[WARN] auto-wait triggered for locator '#submit'</div>
+                            <div class="log">[PASS] test_password_masking (0.12s)</div>
+                            <div class="log pink">[API] Mocking response for /api/v1/users...</div>
+                            <div class="log">[PASS] test_dashboard_load (0.45s)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="prevSlide()">SYS.PREV</button>
+            <button class="btn" onclick="nextSlide()">SYS.NEXT</button>
+        </div>
+
+        <div class="tip">
+            <h3>PIPELINE TIP</h3>
+            <p>Do not automate everything. Focus automation on stable regression suites and highly repetitive flows.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+const lessons = [
+    { title: "What is Automation?", desc: "Automation Testing uses software scripts to execute repetitive test scenarios automatically, eliminating human error and increasing coverage.", tip: "Do not automate everything. Focus automation on stable regression suites and highly repetitive flows.", codeColor: "00ffaa", logs: ["[INIT] Booting automation core...", "pytest tests/test_login.py -n 4", "[PASS] test_login (0.23s)", "[WARN] auto-wait triggered"] },
+    { title: "Playwright Framework", desc: "A modern end-to-end testing tool that natively supports auto-waiting, parallel execution, and network interception across all modern browsers.", tip: "Use Playwright's Tracing feature to debug tests visually, capturing DOM snapshots step-by-step.", codeColor: "007fff", logs: ["npx playwright test --headed", "BrowserType.launch: Chromium", "Page.goto('https://matrix.local')", "Locator.click('#hack-button')"] },
+    { title: "POM Design Pattern", desc: "Page Object Model (parsed) separates UI locators from test logic. Each web page is represented as a Python class, making maintenance highly efficient.", tip: "If a UI locator changes, update it in exactly ONE place (the Page class), not in 50 test files.", codeColor: "ff0055", logs: ["class LoginPage:", "  def __init__(self, page):", "    self.username = page.locator('#usr')", "  def login(self):", "    self.username.fill('admin')"] },
+    { title: "Pytest & BDD (Gherkin)", desc: "Writing test scenarios in plain English (Given/When/Then) using Pytest-BDD bridges the gap between technical testers and business stakeholders.", tip: "Keep your Gherkin steps declarative (focus on business logic) rather than imperative (clicking specific buttons).", codeColor: "00ffaa", logs: ["Feature: Secure Login", "Scenario: Successful bypass", "Given the user is on the portal", "When they inject the payload", "Then access is granted [PASS]"] },
+    { title: "Jenkins CI/CD Pipeline", desc: "Automated scripts are integrated into Jenkins to trigger instantly upon code commits, ensuring bugs are caught before reaching production.", tip: "Configure Slack or Email plugins in Jenkins to notify the dev team the second a build fails.", codeColor: "007fff", logs: ["Started by GitHub push", "Building in workspace /var/lib/", "[Pipeline] sh", "npm install && npm run test", "Finished: SUCCESS"] }
+];
+
+let current = 0;
+const title = document.querySelector(".title");
+const desc = document.querySelector(".description-box p");
+const tipText = document.querySelector(".tip p");
+const progressBar = document.querySelector(".progress-bar");
+const chapter = document.querySelector(".chapter");
+const menuItems = document.querySelectorAll(".menu-item");
+const codeContainer = document.querySelector(".code-container");
+const serverRack = document.querySelector(".server-rack");
+
+// 🎥 3D Camera Variables
+let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+const scene = document.getElementById('scene');
+let isTransitioning = false;
+
+document.addEventListener("mousemove", (e) => {
+    if (window.innerWidth < 900 || isTransitioning) return;
+    targetX = (window.innerWidth / 2 - e.pageX) / 40;
+    targetY = (window.innerHeight / 2 - e.pageY) / 40;
+});
+
+function animateParallax() {
+    currentX += (targetX - currentX) * 0.1; 
+    currentY += (targetY - currentY) * 0.1;
+    if(scene) scene.style.transform = `rotateY(${currentX}deg) rotateX(${currentY}deg)`;
+    requestAnimationFrame(animateParallax);
+}
+animateParallax();
+
+// 🤖 Audio Logic (Kept the same as yours)
+let soundEnabled = false;
+const soundBtn = document.getElementById('sound-toggle');
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+let hasSpoken = false; 
+
+soundBtn.addEventListener('click', () => {
+    if (!audioCtx) audioCtx = new AudioContext();
+    soundEnabled = !soundEnabled;
+    soundBtn.innerText = soundEnabled ? "🔊 JARVIS: ON" : "🔇 JARVIS: OFF";
+    soundBtn.style.color = soundEnabled ? "#fff" : "#007fff";
+    soundBtn.style.background = soundEnabled ? "#007fff" : "transparent";
+    
+    if (soundEnabled) {
+        playSound(800, 'sine', 0.1, 0.05);
+        if(!hasSpoken && 'speechSynthesis' in window) {
+            hasSpoken = true;
+            let msg = new SpeechSynthesisUtterance("Automation Mainframe online. Systems green.");
+            msg.rate = 1.1; msg.pitch = 0.8;
+            window.speechSynthesis.speak(msg);
+        }
+    }
+});
+
+function playSound(freq, type = 'sine', vol = 0.05, duration = 0.1) {
+    if (!soundEnabled || !audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + duration);
+}
+
+// 🚀 THE MAGIC TRANSITION FUNCTION
+function updateSlide(direction) {
+    if(soundEnabled) playSound(direction === 'right' ? 1200 : 600, 'square', 0.03, 0.15);
+
+    isTransitioning = true;
+    
+    // 1. Dramatic Camera Swoop
+    targetX = direction === "right" ? -40 : 40; 
+    targetY = 20;
+
+    // 2. Server Power Surge Effect
+    serverRack.classList.add("power-surge");
+
+    // 3. Remove content temporarily
+    title.classList.remove("glitch");
+    title.style.opacity = "0"; desc.style.opacity = "0"; tipText.style.opacity = "0";
+
+    setTimeout(() => {
+        // Update Content
+        title.innerHTML = lessons[current].title;
+        desc.innerHTML = lessons[current].desc;
+        tipText.innerHTML = lessons[current].tip;
+        
+        // Dynamic Terminal Logs
+        codeContainer.innerHTML = lessons[current].logs.map(log => 
+            `<div class="log ${log.includes('FAIL') ? 'err' : log.includes('WARN') ? 'warn' : ''}">> ${log}</div>`
+        ).join('') + codeContainer.innerHTML; // Append to keep scroll effect
+        
+        // Theme Update
+        document.documentElement.style.setProperty('--primary', '#' + lessons[current].codeColor);
+
+        // Re-apply animations
+        title.classList.add("glitch");
+        title.style.opacity = "1"; 
+        desc.style.opacity = "1"; 
+        tipText.style.opacity = "1";
+        
+        // Reset Camera & Server
+        targetX = 0; targetY = 0;
+        serverRack.classList.remove("power-surge");
+        setTimeout(() => isTransitioning = false, 500);
+
+    }, 300);
+
+    // Update UI elements
+    progressBar.style.width = ((current + 1) / lessons.length) * 100 + "%";
+    chapter.innerHTML = `TEST: 0${current + 1} // 0${lessons.length}`;
+
+    menuItems.forEach(item => item.classList.remove("active"));
+    menuItems[current].classList.add("active");
+}
+
+function nextSlide() { current = (current + 1) % lessons.length; updateSlide("right"); }
+function prevSlide() { current = (current - 1 + lessons.length) % lessons.length; updateSlide("left"); }
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") nextSlide();
+    if (e.key === "ArrowLeft") prevSlide();
+});
+</script>
+</body>
+</html>

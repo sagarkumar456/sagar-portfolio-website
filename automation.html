@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Automation Testing Handbook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="padding: 20px;">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="glass-card" style="max-width: 1000px; margin: auto; padding: 40px; color: #fff;">
+
+        <h1 style="color: var(--primary); margin-bottom: 30px;">
+            Complete Automation Testing Handbook
+        </h1>
+
+        <h2 style="color: var(--primary);">1. Introduction to Automation Testing</h2>
+        <p>
+            <strong>Automation Testing:</strong> The process of using software tools and scripts to execute pre-scripted tests on a software application before it is released into production.
+        </p>
+        <p>
+            <strong>Goal:</strong> Reduce manual effort, speed up regression testing, ensure consistency, and integrate testing into the CI/CD pipeline.
+        </p>
+        <p><strong>Why Automation?</strong></p>
+        <ul>
+            <li>Faster execution of repetitive test cases.</li>
+            <li>Broader test coverage (Cross-browser & Cross-device).</li>
+            <li>Reliability and accuracy (Zero human error).</li>
+            <li>Ability to run tests 24/7 automatically.</li>
+        </ul>
+        <br>
+
+        <h2 style="color: var(--primary);">2. Core Technology Stack</h2>
+        <ul>
+            <li><strong>Language:</strong> Python</li>
+            <li><strong>Web Automation Framework:</strong> Playwright</li>
+            <li><strong>Test Runner:</strong> Pytest</li>
+            <li><strong>BDD Framework:</strong> Pytest-BDD (Gherkin syntax)</li>
+            <li><strong>API Automation:</strong> Postman / Python Requests</li>
+            <li><strong>CI/CD:</strong> Jenkins</li>
+            <li><strong>Design Pattern:</strong> Page Object Model (POM)</li>
+        </ul>
+        <br>
+
+        <h2 style="color: var(--primary);">3. Why Playwright over Selenium?</h2>
+        <p>Playwright is a modern automation tool built for the modern web. Key advantages include:</p>
+        <ul>
+            <li><strong>Auto-Wait Mechanism:</strong> Automatically waits for elements to be actionable, reducing flaky tests.</li>
+            <li><strong>Cross-Browser:</strong> Supports Chromium, Firefox, and WebKit out of the box.</li>
+            <li><strong>Speed:</strong> Uses WebSocket connections instead of HTTP requests, making execution much faster.</li>
+            <li><strong>Network Interception:</strong> Ability to mock and intercept API requests directly in the UI test.</li>
+            <li><strong>Multi-Tab/Multi-Window:</strong> Seamlessly handles multiple contexts in a single test.</li>
+        </ul>
+        <br>
+
+        <h2 style="color: var(--primary);">4. Page Object Model (POM) Architecture</h2>
+        <p>
+            <strong>POM</strong> is a design pattern that creates an object repository for web UI elements.
+        </p>
+        <ul>
+            <li><strong>Separation of Concerns:</strong> UI elements and test logic are kept separate.</li>
+            <li><strong>Reusability:</strong> Page methods can be reused across multiple test cases.</li>
+            <li><strong>Maintainability:</strong> If a UI locator changes, it only needs to be updated in one Page class, not in 50 different test files.</li>
+        </ul>
+        <br>
+
+        <h2 style="color: var(--primary);">5. Behavior-Driven Development (BDD)</h2>
+        <p>
+            BDD bridges the gap between technical teams and business stakeholders by writing tests in plain English.
+        </p>
+        <h3>Gherkin Syntax</h3>
+        <pre style="background: rgba(255,255,255,0.08); padding: 15px; border-radius: 10px; overflow-x:auto; color: #00ffcc;">
+Feature: Login Functionality
+
+  Scenario: Successful login with valid credentials
+    Given the user navigates to the login page
+    When the user enters valid username and password
+    And clicks the login button
+    Then the user should be redirected to the dashboard
+        </pre>
+        <ul>
+            <li><strong>Pytest-BDD:</strong> Used to map these plain English Gherkin steps to actual Python Playwright code using step definitions.</li>
+        </ul>
+        <br>
+
+        <h2 style="color: var(--primary);">6. API Automation</h2>
+        <p>
+            Automating backend endpoints to ensure data integrity before the UI is fully functional.
+        </p>
+        <ul>
+            <li>Validating HTTP Status Codes (200, 201, 400, 404, 500).</li>
+            <li>Verifying JSON Response payloads and schemas.</li>
+            <li>Data extraction and chaining (Using tokens from one API to feed another).</li>
+            <li>Tools used: Postman (Collections & Newman) and Python.</li>
+        </ul>
+        <br>
+
+        <h2 style="color: var(--primary);">7. CI/CD Integration with Jenkins</h2>
+        <p>Automated tests are useless if they aren't run consistently. Jenkins is used to:</p>
+        <ul>
+            <li>Schedule tests to run automatically (e.g., Nightly at 12 AM).</li>
+            <li>Trigger tests immediately after developers push new code.</li>
+            <li>Generate HTML test reports automatically.</li>
+            <li>Send email/Slack alerts if a build fails.</li>
+        </ul>
+        <br>
+
+        <h2 style="color: var(--primary);">8. Standard Automation Framework Structure</h2>
+        <pre style="background: rgba(255,255,255,0.08); padding: 15px; border-radius: 10px; overflow-x:auto; color: #00ffcc;">
+📂 Automation_Framework/
+ ├── 📂 features/          # Gherkin feature files (.feature)
+ ├── 📂 pages/             # POM classes with locators and actions
+ ├── 📂 step_defs/         # Pytest-BDD step definitions mapping to UI
+ ├── 📂 tests/             # Direct Pytest scripts
+ ├── 📂 utils/             # Helpers (Config readers, DB connections)
+ ├── 📂 reports/           # HTML and JSON execution reports
+ ├── conftest.py           # Pytest fixtures (Browser setup/teardown)
+ └── pytest.ini            # Framework configurations
+        </pre>
+        <br>
+
+        <h2 style="color: var(--primary);">9. Automation Interview Q&A</h2>
+        
+        <p><strong>Q: Why did you choose Playwright over Selenium?</strong></p>
+        <p style="color: var(--text-muted);">
+            Playwright offers built-in auto-waiting, native parallel execution, network interception, and requires less boilerplate code compared to Selenium. It handles modern web apps (React, Angular) much better.
+        </p>
+        <br>
+
+        <p><strong>Q: What is a fixture in Pytest?</strong></p>
+        <p style="color: var(--text-muted);">
+            Fixtures provide a fixed baseline for tests. They are used to initialize test prerequisites (like opening a browser or logging into an app) and tear them down (closing the browser) after the test ends.
+        </p>
+        <br>
+
+        <p><strong>Q: How do you handle dynamic elements in Playwright?</strong></p>
+        <p style="color: var(--text-muted);">
+            By using robust locators like text, roles, or CSS/XPath with regular expressions. Playwright's auto-wait feature ensures it waits for the dynamic element to attach to the DOM before interacting.
+        </p>
+        <br>
+
+        <p><strong>Q: Explain the POM design pattern.</strong></p>
+        <p style="color: var(--text-muted);">
+            Page Object Model separates UI locators from test logic. Each web page has a corresponding Python class containing its web elements and methods. This prevents code duplication and makes maintenance easy.
+        </p>
+        <br>
+
+        <h2 style="color: var(--primary);">10. Conclusion</h2>
+        <p>
+            A robust automation framework reduces manual bottlenecks, accelerates delivery, and ensures high-quality software. My approach focuses on writing scalable, maintainable, and highly readable automation scripts using Playwright and BDD.
+        </p>
+        <br><br>
+
+        <a href="index.html" class="neon-btn">
+            ← Back to Portfolio
+        </a>
+        <a href="automation-3d.html" class="neon-btn">
+            View 3D Automation Demo →
+        </a>
+
+    </div>
+
+    <script>
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            if (dot) dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+            if (outline) outline.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        });
+    </script>
+
+</body>
+
+</html>

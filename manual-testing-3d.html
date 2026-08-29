@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D QA Learning Dashboard | Cyberpunk Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* CYBERPUNK DARK THEME */
+body {
+    background: #050914;
+    overflow: hidden;
+    color: #e2e8f0;
+}
+
+/* MAIN */
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+/* SIDEBAR (Glassmorphism) */
+.sidebar {
+    width: 300px;
+    background: rgba(10, 15, 30, 0.8);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(0, 240, 255, 0.1);
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+.logo { font-size: 32px; font-weight: 700; color: #00f0ff; text-shadow: 0 0 15px rgba(0,240,255,0.4); }
+.logo span { color: #fff; }
+.course { color: #94a3b8; margin-top: 5px; font-size: 14px; letter-spacing: 1px; }
+
+.progress-title { margin-top: 40px; color: #94a3b8; font-size: 12px; letter-spacing: 2px; }
+.progress { width: 100%; height: 8px; background: #1e293b; border-radius: 20px; margin-top: 10px; overflow: hidden; }
+.progress-bar { width: 25%; height: 100%; background: linear-gradient(90deg, #ff007f, #00f0ff); box-shadow: 0 0 15px rgba(0, 240, 255, 0.8); transition: 0.5s ease-out; }
+
+/* MENU */
+.menu { margin-top: 40px; }
+.menu-item { display: flex; align-items: center; gap: 15px; padding: 15px; margin-bottom: 12px; border-radius: 12px; transition: .4s; cursor: pointer; color: #cbd5e1; border: 1px solid transparent; }
+.menu-item:hover { background: rgba(0, 240, 255, 0.05); border-color: rgba(0, 240, 255, 0.2); transform: translateX(8px); }
+.menu-item.active { background: rgba(0, 240, 255, 0.1); border-color: #00f0ff; color: #fff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.1); }
+.number { width: 32px; height: 32px; border-radius: 8px; background: #1e293b; display: flex; justify-content: center; align-items: center; font-weight: 600; transition: 0.3s; font-family: 'Fira Code', monospace; }
+.menu-item.active .number { background: #00f0ff; color: #000; box-shadow: 0 0 10px #00f0ff; }
+
+/* PROFILE */
+.profile { background: rgba(0,0,0,0.3); border-radius: 20px; padding: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.05); }
+.avatar { width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, #00f0ff, #ff007f); display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 0 15px rgba(0,240,255,0.3); }
+.profile h3 { font-size: 16px; color: #fff; }
+.profile p { font-size: 12px; color: #00f0ff; font-family: 'Fira Code', monospace; }
+
+/* CONTENT & 3D PERSPECTIVE */
+.content {
+    flex: 1;
+    padding: 40px 60px;
+    position: relative;
+    perspective: 1500px;
+    background: radial-gradient(circle at 70% 50%, #0a1128 0%, #050914 100%);
+}
+
+/* TOPBAR */
+.topbar { display: flex; justify-content: flex-end; gap: 20px; position: relative; z-index: 5; }
+.chapter { background: rgba(0, 240, 255, 0.1); color: #00f0ff; padding: 12px 25px; border-radius: 8px; font-weight: 600; border: 1px solid rgba(0,240,255,0.3); }
+
+/* TITLE & TEXT */
+.title { font-size: 48px; color: #fff; margin-top: 30px; transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); text-shadow: 0 0 20px rgba(0,240,255,0.2); }
+.description-box { width: 550px; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 35px; margin-top: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; z-index: 5; }
+.description-box p { font-size: 17px; line-height: 1.8; color: #cbd5e1; transition: 0.6s; }
+.list { margin-top: 25px; }
+.list li { margin-bottom: 15px; font-size: 16px; color: #f1f5f9; list-style: none; display: flex; align-items: center; gap: 12px; font-family: 'Fira Code', monospace; }
+.list li span { color: #00f0ff; text-shadow: 0 0 8px #00f0ff; }
+
+/* 📊 HOLOGRAPHIC BOARD */
+.board { position: absolute; top: 80px; right: 120px; width: 350px; height: 200px; background: rgba(0, 240, 255, 0.05); border: 2px solid rgba(0, 240, 255, 0.3); border-radius: 15px; padding: 20px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.1), inset 0 0 20px rgba(0, 240, 255, 0.05); transform: rotateY(-15deg) translateZ(-100px); backdrop-filter: blur(5px); }
+.board::before { content: 'SYSTEM METRICS'; position: absolute; top: -12px; left: 20px; background: #050914; color: #00f0ff; font-family: 'Fira Code'; font-size: 12px; padding: 0 10px; }
+.holo-data { color: #fff; font-family: 'Fira Code', monospace; margin-top: 20px; }
+.holo-data div { margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px; }
+.holo-data span { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
+
+/* 🏢 OFFICE SCENE (3D Parallax Root) */
+.office {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    width: 750px;
+    height: 650px;
+    transform-style: preserve-3d;
+    /* Transformation handled by JS Lerp now */
+}
+
+/* 🪑 GLOWING TABLE */
+.table { width: 560px; height: 20px; background: #1e293b; border-radius: 10px; position: absolute; left: 80px; bottom: 120px; box-shadow: 0 30px 50px rgba(0,0,0,0.8), inset 0 2px 5px rgba(255,255,255,0.1); transform: translateZ(50px); border-bottom: 3px solid #00f0ff; }
+.table::before, .table::after { content: ''; width: 25px; height: 160px; background: #0f172a; position: absolute; bottom: -160px; border-radius: 5px; box-shadow: 15px 0 20px rgba(0,0,0,0.5); }
+.table::before { left: 40px; } .table::after { right: 40px; }
+
+/* ⌨️ RGB KEYBOARD & MOUSE */
+.keyboard { width: 140px; height: 40px; background: #111; position: absolute; bottom: 130px; left: 280px; transform: rotateX(60deg) translateZ(60px); border-radius: 5px; box-shadow: 0 0 15px rgba(255, 0, 127, 0.5), inset 0 0 5px rgba(0,240,255,0.5); border: 1px solid #333; }
+.mouse { width: 20px; height: 30px; background: #222; position: absolute; bottom: 125px; left: 450px; transform: rotateX(60deg) translateZ(60px); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.8); }
+
+/* 🖥️ MONITORS (Live Scrolling Code) */
+.monitor { width: 250px; height: 160px; background: #0b1120; border-radius: 10px; position: absolute; top: -140px; border: 2px solid #334155; border-bottom: 15px solid #1e293b; transform-style: preserve-3d; box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 30px rgba(0, 240, 255, 0.1); }
+.monitor::after { content:''; position:absolute; bottom:-35px; left:50%; transform:translateX(-50%); width:30px; height:35px; background:#1e293b; }
+.monitor.left { left: 10px; transform: rotateY(20deg); }
+.monitor.right { right: 10px; transform: rotateY(-20deg); }
+
+.screen { padding: 15px; height: 100%; background: #030712; border-radius: 4px; box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.15); overflow: hidden; position: relative; }
+/* Glass reflection */
+.screen::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%); pointer-events:none; }
+
+/* 📜 Scrolling Logs Animation */
+.code-container { width: 100%; height: 200%; animation: scrollCode 5s linear infinite; display: flex; flex-direction: column; gap: 8px; }
+@keyframes scrollCode { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+.log { height: 4px; border-radius: 4px; box-shadow: 0 0 8px currentColor; }
+.log.green { width: 80%; background: #00ffcc; color: #00ffcc; }
+.log.pink { width: 60%; background: #ff007f; color: #ff007f; }
+.log.blue { width: 90%; background: #00f0ff; color: #00f0ff; }
+.log.yellow { width: 40%; background: #ffcc00; color: #ffcc00; }
+
+/* 👨‍💻 HUMAN (Breathing + Typing + QA Headset) */
+.human { position: absolute; left: 280px; bottom: 160px; transform-style: preserve-3d; transform: translateZ(100px); }
+.head { width: 85px; height: 85px; background: radial-gradient(circle at 30% 30%, #e2b496, #b88a6d); border-radius: 50%; margin: auto; position: relative; box-shadow: inset -10px -10px 20px rgba(0,0,0,0.5); animation: breatheHead 4s infinite ease-in-out; }
+
+/* QA Headset */
+.headset { position: absolute; top: -5px; left: -5px; width: 95px; height: 50px; border-top: 8px solid #222; border-radius: 50px 50px 0 0; }
+.earpiece { position: absolute; bottom: -20px; left: -5px; width: 25px; height: 40px; background: #111; border-radius: 10px; border-left: 2px solid #00f0ff; box-shadow: 0 0 10px rgba(0,240,255,0.5); }
+.mic { position: absolute; bottom: 0px; right: -25px; width: 30px; height: 4px; background: #333; }
+.mic::after { content:''; position:absolute; right:0; top:-3px; width:10px; height:10px; background:#ff007f; border-radius:50%; box-shadow: 0 0 10px #ff007f; }
+
+.eyes { position: absolute; top: 35px; right: 15px; display: flex; gap: 12px; }
+.eye { width: 6px; height: 6px; background: #00f0ff; border-radius: 50%; animation: blink 4s infinite; box-shadow: 0 0 8px #00f0ff; }
+
+.body { width: 130px; height: 170px; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 40px 40px 20px 20px; margin: auto; position: relative; box-shadow: inset -10px -10px 20px rgba(0,0,0,0.6); animation: breatheBody 4s infinite ease-in-out; border-left: 2px solid rgba(0,240,255,0.2); }
+
+/* Typing Arms */
+.arm-left, .arm-right { width: 30px; height: 110px; background: linear-gradient(to bottom, #1e293b 40%, #e2b496 40%); position: absolute; top: 40px; border-radius: 20px; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5); }
+.arm-left { left: -15px; transform-origin: top center; animation: typeLeft 0.3s infinite alternate; }
+.arm-right { right: -5px; transform-origin: top center; animation: typeRight 0.4s infinite alternate; }
+
+/* CHAIR */
+.chair { width: 150px; height: 170px; border-radius: 30px; border: 15px solid #334155; border-bottom: none; position: absolute; left: 270px; bottom: 100px; z-index: -1; box-shadow: inset 0 20px 20px rgba(0,0,0,0.5), 10px 20px 30px rgba(0,0,0,0.5); transform: translateZ(20px); }
+.chair::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:20px; height:60px; background:#111; }
+
+/* KEYFRAME ANIMATIONS */
+@keyframes breatheBody { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes breatheHead { 0%, 100% { transform: translateY(0) rotateZ(0deg); } 50% { transform: translateY(-6px) rotateZ(1deg); } }
+@keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0); } }
+@keyframes typeLeft { 0% { transform: rotate(40deg) translateZ(60px); } 100% { transform: rotate(30deg) translateZ(60px); } }
+@keyframes typeRight { 0% { transform: rotate(-35deg) translateZ(60px); } 100% { transform: rotate(-25deg) translateZ(60px); } }
+
+/* BUTTONS */
+.controls { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); padding: 12px 25px; border-radius: 60px; display: flex; gap: 20px; align-items: center; border: 1px solid rgba(0,240,255,0.2); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.btn { padding: 12px 35px; border: 1px solid #00f0ff; border-radius: 50px; background: transparent; color: #00f0ff; font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+.btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 20px rgba(0, 240, 255, 0.6); transform: translateY(-2px); }
+
+/* TIP / TERMINAL */
+.tip { position: absolute; right: 40px; bottom: 40px; width: 300px; background: rgba(0,0,0,0.6); border: 1px solid #334155; border-left: 4px solid #ff007f; border-radius: 10px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); transform: translateZ(80px); transition: 0.5s; backdrop-filter: blur(5px); }
+.tip:hover { transform: translateZ(100px) translateY(-5px); border-left-color: #00f0ff; }
+.tip h3 { color: #fff; margin-bottom: 12px; font-family: 'Fira Code', monospace; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+.tip h3::before { content: '>_'; color: #ff007f; }
+.tip p { line-height: 1.6; color: #94a3b8; font-size: 13px; font-family: 'Fira Code', monospace; }
+
+@media(max-width:900px){
+    body { overflow: auto; }
+    .container { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(0,240,255,0.1); }
+    .content { padding: 20px; }
+    .office { position: relative; transform: scale(0.6) translateZ(0) !important; right: 0; bottom: 0; margin-top: 50px; }
+    .description-box, .tip { width: 100%; position: relative; right: 0; bottom: 0; transform: none !important; margin-bottom: 20px; }
+    .board { display: none; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    
+    <div class="sidebar">
+        <div>
+            <div class="logo">QA <span>NEXUS</span></div>
+            <div class="course">Automation & Manual Core</div>
+            <div class="progress-title">SYSTEM BOOT PROGRESS</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <div class="menu">
+                <div class="menu-item active"><div class="number">01</div>What is Testing?</div>
+                <div class="menu-item"><div class="number">02</div>Functional Testing</div>
+                <div class="menu-item"><div class="number">03</div>Bug Life Cycle</div>
+                <div class="menu-item"><div class="number">04</div>API & Postman</div>
+                <div class="menu-item"><div class="number">05</div>Playwright Auto</div>
+            </div>
+        </div>
+        <div class="profile">
+            <div class="avatar">👨‍💻</div>
+            <div>
+                <h3>Sagar Kumar</h3>
+                <p>Architect Level</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="topbar">
+            <div class="chapter">MODULE: 01 // 05</div>
+        </div>
+
+        <h1 class="title">What is Manual Testing?</h1>
+        <div class="description-box">
+            <p>Manual Testing is the process of manually simulating end-user interactions without automation scripts to uncover critical logical and UI defects.</p>
+            <ul class="list">
+                <li><span>[+]</span> Executes edge cases logic can't predict.</li>
+                <li><span>[+]</span> Guarantees UI/UX pixel perfection.</li>
+                <li><span>[+]</span> Provides rapid feedback in Agile setups.</li>
+                <li><span>[+]</span> Foundation for writing solid automation.</li>
+            </ul>
+        </div>
+
+        <div class="board">
+            <div class="holo-data">
+                <div>Pass Rate: <span>100%</span></div>
+                <div>Critical Bugs: <span>0</span></div>
+                <div>Test Coverage: <span>98.5%</span></div>
+                <div>Status: <span>STABLE</span></div>
+            </div>
+        </div>
+
+        <div class="office" id="scene">
+            <div class="table">
+                <div class="keyboard"></div>
+                <div class="mouse"></div>
+                
+                <div class="monitor left">
+                    <div class="screen">
+                        <div class="code-container">
+                            <div class="log green"></div><div class="log blue"></div><div class="log pink"></div><div class="log yellow"></div><div class="log green"></div>
+                            <div class="log blue"></div><div class="log yellow"></div><div class="log green"></div><div class="log pink"></div><div class="log blue"></div>
+                            
+                            <div class="log green"></div><div class="log blue"></div><div class="log pink"></div><div class="log yellow"></div><div class="log green"></div>
+                            <div class="log blue"></div><div class="log yellow"></div><div class="log green"></div><div class="log pink"></div><div class="log blue"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="monitor right">
+                    <div class="screen">
+                        <div class="code-container" style="animation-duration: 3s; animation-direction: reverse;">
+                            <div class="log yellow"></div><div class="log green"></div><div class="log blue"></div><div class="log pink"></div><div class="log blue"></div>
+                            <div class="log green"></div><div class="log yellow"></div><div class="log pink"></div><div class="log green"></div><div class="log blue"></div>
+                            
+                            <div class="log yellow"></div><div class="log green"></div><div class="log blue"></div><div class="log pink"></div><div class="log blue"></div>
+                            <div class="log green"></div><div class="log yellow"></div><div class="log pink"></div><div class="log green"></div><div class="log blue"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chair"></div>
+            
+            <div class="human">
+                <div class="head">
+                    <div class="headset">
+                        <div class="earpiece"></div>
+                        <div class="mic"></div>
+                    </div>
+                    <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+                </div>
+                <div class="body">
+                    <div class="arm-left"></div>
+                    <div class="arm-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="prevSlide()">SYS.PREV</button>
+            <button class="btn" onclick="nextSlide()">SYS.NEXT</button>
+        </div>
+
+        <div class="tip">
+            <h3>TERMINAL LOG</h3>
+            <p>Always test from an end-user perspective. Break the system before the user does.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+const lessons = [
+    { title: "What is Manual Testing?", desc: "Manual Testing is the process of manually simulating end-user interactions without automation scripts to uncover critical logical and UI defects.", tip: "Always test from an end-user perspective. Break the system before the user does." },
+    { title: "Functional Testing", desc: "Verifying that each function of the software application operates in conformance with the required business specification.", tip: "Negative testing is crucial. Enter invalid data to see how the system handles exceptions." },
+    { title: "Bug Life Cycle", desc: "The journey of a defect from discovery to resolution: NEW → ASSIGNED → OPEN → FIXED → PENDING RETEST → VERIFIED → CLOSED.", tip: "A bug report is useless without clear steps to reproduce and environment details." },
+    { title: "API & Postman", desc: "Validating backend logic, data accuracy, and HTTP responses (200 OK, 400 Bad Request) before the UI is even built.", tip: "Always assert the JSON payload schema, not just the HTTP 200 success code." },
+    { title: "Playwright Auto", desc: "Modern end-to-end testing for modern web apps. It executes faster, handles auto-waits, and operates across multiple browsers seamlessly.", tip: "Use Page Object Model (POM) to keep your automation framework scalable and clean." }
+];
+
+let current = 0;
+const title = document.querySelector(".title");
+const desc = document.querySelector(".description-box p");
+const tipText = document.querySelector(".tip p");
+const progressBar = document.querySelector(".progress-bar");
+const chapter = document.querySelector(".chapter");
+const menuItems = document.querySelectorAll(".menu-item");
+
+// 🔥 Silky Smooth Parallax (Lerp Algorithm)
+let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+const scene = document.getElementById('scene');
+
+document.addEventListener("mousemove", (e) => {
+    if (window.innerWidth < 900) return;
+    targetX = (window.innerWidth / 2 - e.pageX) / 35;
+    targetY = (window.innerHeight / 2 - e.pageY) / 35;
+});
+
+function animateParallax() {
+    currentX += (targetX - currentX) * 0.1; // 0.1 determines the smoothness/lag
+    currentY += (targetY - currentY) * 0.1;
+    if(scene) scene.style.transform = `rotateY(${currentX}deg) rotateX(${currentY}deg)`;
+    requestAnimationFrame(animateParallax);
+}
+animateParallax();
+
+function nextSlide() {
+    current = (current + 1) % lessons.length;
+    updateSlide("right");
+}
+
+function prevSlide() {
+    current = (current - 1 + lessons.length) % lessons.length;
+    updateSlide("left");
+}
+
+function updateSlide(direction) {
+    // Smooth Text Transition
+    title.style.opacity = "0"; desc.style.opacity = "0"; tipText.style.opacity = "0";
+    title.style.transform = direction === "right" ? "translateX(-30px)" : "translateX(30px)";
+    desc.style.transform = direction === "right" ? "translateX(-30px)" : "translateX(30px)";
+
+    setTimeout(() => {
+        title.innerHTML = lessons[current].title;
+        desc.innerHTML = lessons[current].desc;
+        tipText.innerHTML = lessons[current].tip;
+
+        title.style.opacity = "1"; desc.style.opacity = "1"; tipText.style.opacity = "1";
+        title.style.transform = "translateX(0)"; desc.style.transform = "translateX(0)";
+    }, 400);
+
+    // 3D Human Turn Animation
+    const human = document.querySelector(".human");
+    human.style.transform = direction === "right" ? "translateZ(100px) rotateY(35deg)" : "translateZ(100px) rotateY(-35deg)";
+    
+    // Pause typing
+    document.querySelector(".arm-left").style.animationPlayState = "paused";
+    document.querySelector(".arm-right").style.animationPlayState = "paused";
+
+    setTimeout(() => {
+        human.style.transform = "translateZ(100px) rotateY(0deg)";
+        document.querySelector(".arm-left").style.animationPlayState = "running";
+        document.querySelector(".arm-right").style.animationPlayState = "running";
+    }, 800);
+
+    // Dynamic Progress Bar & Chapter
+    progressBar.style.width = ((current + 1) / lessons.length) * 100 + "%";
+    chapter.innerHTML = `MODULE: 0${current + 1} // 0${lessons.length}`;
+
+    // Update Sidebar Active State
+    menuItems.forEach(item => item.classList.remove("active"));
+    menuItems[current].classList.add("active");
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") nextSlide();
+    if (e.key === "ArrowLeft") prevSlide();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagar Kumar | QA Automation Architect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<!-- register form -->
+
+<body>
+    <!-- 
+    <a href="index.html" class="logo-container hover-target">
+        <img src="video/logo/S.K. Automation.png" alt="Sagar Kumar QA Logo" class="logo-img">
+    </a> -->
+    <a href="index.html" class="logo-container hover-target">
+        <img src="video/logo/S.K. Automation.png" alt="Globe Logo" class="logo-img rotate-globe">
+    </a>
+    <div class="auth-container"
+        style="position: fixed; top: 30px; right: 40px; z-index: 999999; display: flex; gap: 15px; pointer-events: auto;">
+        <button id="nav-login-btn" class="neon-btn hover-target"
+            style="padding: 8px 15px; font-size: 0.85rem; position: relative; z-index: 999999; cursor: pointer;">Login</button>
+        <button id="nav-register-btn" class="neon-btn hover-target"
+            style="padding: 8px 15px; font-size: 0.85rem; background: rgba(0, 243, 255, 0.1); position: relative; z-index: 999999; cursor: pointer;">Register</button>
+    </div>
+
+    <div id="auth-modal" class="auth-modal" style="z-index: 9999999;">
+        <div class="glass-card auth-box">
+            <span id="close-auth" class="close-btn hover-target">&times;</span>
+            <h2 id="auth-title" style="color: var(--neon-cyan); margin-bottom: 20px;">Login</h2>
+
+            <form id="auth-form">
+                <input type="email" id="auth-email" placeholder="Email Address" required
+                    class="auth-input hover-target">
+                <input type="password" id="auth-password" placeholder="Password" required
+                    class="auth-input hover-target">
+                <button type="submit" id="auth-submit-btn" class="neon-btn"
+                    style="width: 100%; margin-top: 10px;">Submit</button>
+            </form>
+
+            <div
+                style="margin: 20px 0 15px; border-top: 1px solid rgba(255,255,255,0.1); position: relative; text-align: center;">
+                <span
+                    style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #141414; padding: 0 10px; font-size: 0.8rem; color: #888888;">OR</span>
+            </div>
+
+            <button type="button" id="google-auth-btn" class="google-btn hover-target">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Icon"
+                    style="width: 18px; height: 18px;">
+                Continue with Google
+            </button>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #ccc;">
+                <span id="auth-toggle-text">Don't have an account?</span>
+                <a href="#" id="auth-toggle-link" style="color: var(--neon-cyan); text-decoration: none;"
+                    class="hover-target">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div id="preloader">
+        <div class="terminal-loader">
+            <span class="loader-text">> System Boot Initiated...</span>
+            <span class="loader-text">> Loading Automation Frameworks...</span>
+            <span class="loader-text">> Verifying Test Cases...</span>
+            <span class="loader-text success-text">> Access Granted. Welcome.</span>
+        </div>
+    </div>
+
+    <video autoplay loop muted playsinline poster="video/AI Innovations_ Transforming the Technological Terrain (1).mp4"
+        class="video-bg">
+        <source src="video/AI Innovations_ Transforming the Technological Terrain (1).mp4" type="video/mp4">
+    </video>
+
+    <div class="video-overlay"></div>
+
+    <div id="log-container"></div>
+
+    <header class="hidden-fade">
+        <div class="hero-content">
+            <span
+                style="color: #00f3ff; font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; font-weight: bold; margin-bottom: 5px; display: block;">
+                Software Engineer
+            </span>
+            <h1 class="glitch" data-text="Sagar Kumar">Sagar Kumar</h1>
+            <div class="typewriter-container">
+                <span id="typewriter"></span><span class="cursor-blink">&nbsp;</span>
+            </div>
+            <p class="subtitle">QA Automation Architect | Engineering Flawless Systems</p>
+
+            <div class="contact-links"
+                style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; align-items: center; margin-top: 20px;">
+
+                <a href="mailto:skdas1641999@gmail.com" class="neon-btn magnetic-btn hover-target">Email Me</a>
+                <a href="tel:6299134504" class="neon-btn magnetic-btn hover-target">Call Now</a>
+
+                <button id="resume-btn" class="neon-btn magnetic-btn hover-target"
+                    style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-family: inherit;">
+                    DOWNLOAD RESUME
+                    <span id="download-count"
+                        style="font-size: 0.8rem; color: #fff; background: rgba(0, 243, 255, 0.2); padding: 2px 6px; border-radius: 4px;">(0)</span>
+                </button>
+
+                <div id="email-form-container" style="display: none; align-items: center; gap: 10px;">
+                    <input type="email" id="visitor-email" placeholder="Enter your email..." required
+                        class="auth-input hover-target"
+                        style="padding: 8px 12px; font-size: 0.85rem; width: 200px; margin-bottom: 0;">
+                    <button id="submit-email-btn" class="neon-btn hover-target"
+                        style="padding: 8px 15px; font-size: 0.85rem; cursor: pointer;">SUBMIT</button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="hidden-3d">
+        <h2 class="section-title"><span>01.</span> Profile Summary</h2>
+        <div class="glass-card full-width hover-target-card">
+            <p class="about-text">
+                I am a detail-oriented Testing Engineer with over 3+ years of experience in both Manual and Automation
+                testing,
+                bridging the gap between rapid development and rock-solid reliability. From executing complex manual
+                exploratory testing to building scalable automation POM frameworks in Playwright and Python, my focus
+                is always on delivering flawless software. I thrive in Agile environments, hunting bugs before they
+                reach
+                the users.
+            </p>
+        </div>
+    </section>
+
+    <section id="experience" class="hidden-3d">
+        <h2 class="section-title"><span>02.</span> Professional Experience</h2>
+        <div class="glass-card full-width experience-card hover-target-card">
+            <div class="exp-header">
+                <h3>Software Testing Engineer</h3>
+                <span class="company">Onelap Telematics Pvt. Ltd. | March 2023 - Present</span>
+            </div>
+            <ul>
+                <li>Engineered test plans for Web, CRM, and Mobile platforms, ensuring cross-device stability.</li>
+                <li>Executed robust UI, regression, and API tests via Postman, validated by deep SQL database queries.
+                </li>
+                <li>Initiated automation test scripts using Playwright to accelerate release cycles.</li>
+                <li>Played a critical role in stabilizing GPS tracking logic and Dashcam connectivity modules.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="skills">
+
+        <h2 class="section-title hidden-3d">
+            <span>03.</span> Technical Arsenal
+        </h2>
+
+        <div class="skills-grid">
+
+            <!-- CORE TESTING -->
+            <div class="glass-card skill-card hidden-3d hover-target-card">
+
+                <div class="icon">🔍</div>
+
+                <h3>Core Testing</h3>
+
+                <p>
+                    Expertise in Manual Testing including Functional,
+                    Regression, UI, Integration, System, UAT,
+                    Smoke & Sanity Testing with strong defect analysis skills.
+                </p>
+
+                <a href="details.html?skill=core-testing" id="core-testing-btn" data-skill="core-testing"
+                    class="neon-btn details-btn">
+                    View Details
+                </a>
+
+            </div>
+
+            <!-- AUTOMATION -->
+            <div class="glass-card skill-card hidden-3d hover-target-card" style="transition-delay: 0.1s;">
+
+                <div class="icon">⚙️</div>
+
+                <h3>Automation Testing</h3>
+
+                <p>
+                    Automation expertise using Playwright with Python,
+                    API Testing using Postman,
+                    Page Object Model (POM),
+                    reusable framework development,
+                    and end-to-end test automation.
+                </p>
+
+                <a href="automation.html" class="neon-btn details-btn">
+                    View Details
+                </a>
+
+            </div>
+
+            <!-- FRAMEWORK -->
+            <div class="glass-card skill-card hidden-3d hover-target-card" style="transition-delay: 0.2s;">
+
+                <div class="icon">🏗️</div>
+
+                <h3>Framework & CI/CD</h3>
+
+                <p>
+                    Hands-on experience with BDD Frameworks using Gherkin,
+                    Pytest-BDD Architecture,
+                    Jenkins CI/CD Pipelines,
+                    Agile/Scrum practices,
+                    and scalable automation framework design.
+                </p>
+
+                <a href="llm-testing.html" class="neon-btn details-btn">
+                    View Details
+                </a>
+
+            </div>
+
+            <div class="glass-card skill-card hidden-3d hover-target-card" style="transition-delay: 0.3s;">
+                <div class="icon">🌐</div>
+                <h3>Web Technologies</h3>
+                <p>
+                    Basic knowledge of HTML, CSS, and JavaScript. Proficient in understanding frontend code structure,
+                    integrating new scripts, and effectively debugging/fixing UI issues.
+                </p>
+                <a href="#projects" class="neon-btn details-btn">
+                    View Details
+                </a>
+            </div>
+
+            <!-- TOOLS -->
+            <div class="glass-card skill-card hidden-3d hover-target-card" style="transition-delay: 0.3s;">
+
+                <div class="icon">🛠️</div>
+
+                <h3>Tools & Platforms</h3>
+
+                <p>
+                    Experienced with SQL, JIRA, Trello, Grafana,
+                    Xcode, Google Play Console,
+                    Browser DevTools, Postman,
+                    and modern testing & debugging platforms.
+                </p>
+
+                <a href="details.html?skill=tools" class="neon-btn details-btn">
+                    View Details
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title hidden-3d"><span>04.</span> Project Highlights</h2>
+        <div class="project-grid">
+            <div class="glass-card project-card hidden-3d hover-target-card">
+                <h3>🛒 E-Commerce Testing (onelap.in)</h3>
+                <p>Performed manual and Playwright automation to validate UI elements, responsiveness, and end-to-end
+                    order workflows including cart, coupon application, and multiple payment methods.</p>
+                <a href="https://www.onelap.in/" class="neon-btn magnetic-btn">View Project</a>
+
+            </div>
+            <div class="glass-card project-card hidden-3d hover-target-card" style="transition-delay: 0.1s;">
+                <h3>🛰️ GPS Tracking & Dashcam App</h3>
+                <p>Verified live location, route accuracy, and dashcam playback on Android & iOS. Validated app-hardware
+                    connectivity and executed API testing in Postman, serving over 200,000 active users.</p>
+                <a href="https://play.google.com/store/apps/details?id=in.onelap.gpstracker&hl=en_IN"
+                    class="neon-btn magnetic-btn">View Project</a>
+            </div>
+            <div class="glass-card project-card hidden-3d hover-target-card" style="transition-delay: 0.2s;">
+                <h3>📊 Web Tracking Dashboard (web.onelap.in)</h3>
+                <p>Tested the main web tracking CRM dashboard, verifying core vehicle monitoring features like real-time
+                    Location tracking, Route history, Events logs, Trips, and comprehensive Summaries.</p>
+                <a href="https://web.onelap.in/" class="neon-btn magnetic-btn">View Project</a>
+            </div>
+            <div class="glass-card project-card hidden-3d hover-target-card" style="transition-delay: 0.3s;">
+                <h3>💼 Onelap Sales & Support CRM</h3>
+                <p>
+                    Executed comprehensive end-to-end testing for support and sales modules, ensuring seamless customer
+                    interactions, accurate issue resolution, improved system reliability, and an enhanced user
+                    experience across web and mobile applications.
+                </p>
+                <a href="#projects" class="neon-btn magnetic-btn">View Project</a>
+            </div>
+
+            <div class="glass-card project-card hidden-3d hover-target-card">
+                <h3>🤖 AI-Powered Personal Portfolio</h3>
+                <p>
+                    Designed and developed a responsive personal portfolio website utilizing HTML, CSS, JavaScript, and
+                    Python. Successfully leveraged Gemini AI throughout the development lifecycle for code structuring,
+                    optimization, and integrating a live smart AI assistant (Elara) to handle real-time visitor
+                    interactions.
+                </p>
+
+                <a href="javascript:void(0)" onclick="toggleChat()" class="neon-btn magnetic-btn">
+                    View Project
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="bug-tracker-section" style="padding: 50px 20px; max-width: 1200px; margin: 0 auto;">
+        <h2 style="color: #fff; text-align: center; font-size: 2.5rem; margin-bottom: 40px;">
+            Tracked <span style="color: #00f3ff; text-shadow: 0 0 10px #00f3ff;">Bugs</span>
+        </h2>
+
+        <div class="bug-grid">
+
+            <div class="bug-card hover-target">
+                <div class="bug-header">
+                    <span class="bug-id">BUG-001</span>
+                    <span class="badge badge-fixed">Fixed</span>
+                </div>
+                <h3 class="bug-title">Cursor missing on Auth Modal</h3>
+                <p class="bug-desc">Custom mouse cursor goes behind the modal blur overlay preventing user interaction.
+                </p>
+                <div class="bug-footer">
+                    <span class="severity severity-high">Severity: High</span>
+                </div>
+            </div>
+
+            <div class="bug-card hover-target">
+                <div class="bug-header">
+                    <span class="bug-id">BUG-002</span>
+                    <span class="badge badge-open">Open</span>
+                </div>
+                <h3 class="bug-title">Mobile Menu Glitch</h3>
+                <p class="bug-desc">Navigation menu sometimes overlaps with the hero section on screens smaller than
+                    360px.</p>
+                <div class="bug-footer">
+                    <span class="severity severity-medium">Severity: Medium</span>
+                </div>
+            </div>
+
+            <div class="bug-card hover-target">
+                <div class="bug-header">
+                    <span class="bug-id">BUG-003</span>
+                    <span class="badge badge-fixed">Fixed</span>
+                </div>
+                <h3 class="bug-title">Duplicate Email Download</h3>
+                <p class="bug-desc">System allows multiple resume downloads with the same email address without warning.
+                </p>
+                <div class="bug-footer">
+                    <span class="severity severity-low">Severity: Low</span>
+                </div>
+            </div>
+            <div class="bug-card hover-target">
+                <div class="bug-header">
+                    <span class="bug-id">BUG-004</span>
+                    <span class="badge badge-fixed">Fixed</span>
+                </div>
+                <h3 class="bug-title">Download API Count Abuse</h3>
+                <p class="bug-desc">Endpoint was unprotected. Repeatedly hitting the API artificially increased the
+                    download counter without an actual file download. Fixed via validation check.</p>
+                <div class="bug-footer">
+                    <span class="severity severity-high">Severity: High</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="services" class="hidden-3d">
+        <div class="glass-card cta-card hover-target-card">
+            <h2>Need Your Platform Tested?</h2>
+            <p>If you need your website or app tested, feel free to contact me.</p>
+            <p class="eng-text">I ensure your digital products are bug-free, scalable, and production-ready.</p>
+            <a href="mailto:skdas1641999@gmail.com" class="neon-btn magnetic-btn cta-btn hover-target">Let's Talk
+                Business</a>
+        </div>
+    </section>
+
+    <footer class="hidden-fade">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/sagarautomation" target="_blank" rel="noopener noreferrer"
+                class="hover-target">LinkedIn</a>
+            <a href="https://github.com/sagarkumar456" target="_blank" rel="noopener noreferrer"
+                class="hover-target">GitHub</a>
+        </div>
+        <p>B.C.A Graduate (BRABU) | Based in Noida</p>
+        <p class="copyright">© 2026 Sagar Kumar. All systems nominal.</p>
+    </footer>
+
+    <button id="chat-toggle-btn" onclick="toggleChat()">💬</button>
+
+    <div class="chat-container" id="chat-container" style="display: none;">
+        <div class="chat-header">
+            Support Chat
+            <span class="close-btn" onclick="toggleChat()">✖</span>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">Hello! How may I assist you today?</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="script.js"></script>
+</body>
+
+
+</html>
+
+</html>
