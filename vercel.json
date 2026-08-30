@@ -1,15 +1,8 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/chat",
-      "dest": "/api/app"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/chat",
+      "destination": "/api/app"
     }
   ]
 }
