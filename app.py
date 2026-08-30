@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 from groq import Groq
 from dotenv import load_dotenv
@@ -14,8 +14,13 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 @app.route('/chat', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def chat_with_ai():
+    # OPTIONS request (Preflight) ko explicitly handle aur allow karne ke liye headers
     if request.method == "OPTIONS":
-        return jsonify({"status": "ok"}), 200
+        response = make_response(jsonify({"status": "ok"}))
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        return response, 200
         
     try:
         data = request.json
@@ -69,11 +74,17 @@ def chat_with_ai():
         )
         
         ai_reply = completion.choices[0].message.content
-        return jsonify({"reply": ai_reply})
+        
+        # POST response mein CORS headers attach karein
+        final_response = make_response(jsonify({"reply": ai_reply}))
+        final_response.headers.add("Access-Control-Allow-Origin", "*")
+        return final_response
         
     except Exception as e:
         print("Error during Groq API call:", e)
-        return jsonify({"reply": "An error occurred with the backend server."}), 500
+        error_response = make_response(jsonify({"reply": "An error occurred with the backend server."}))
+        error_response.headers.add("Access-Control-Allow-Origin", "*")
+        return error_response, 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
