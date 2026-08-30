@@ -405,7 +405,7 @@ if (submitEmailBtn) {
             // STEP B: Force the PDF download
             const link = document.createElement('a');
             link.href = 'video/cv/new_cv (1).pdf'; 
-            link.download = 'Sagar_Kumar_Resume.pdf';
+            link.download = 'Resume.pdf';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -600,7 +600,6 @@ if (authForm) {
                     showAuthToast("⚠️ Login Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)");
                 })
                 .finally(() => {
-                    // DYNAMIC TEXT FIX
                     authSubmitBtn.innerText = isLoginMode ? "Login to Account" : "Register Now";
                     authSubmitBtn.disabled = false;
                 });
@@ -614,7 +613,6 @@ if (authForm) {
                     showAuthToast("⚠️ Registration Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)");
                 })
                 .finally(() => {
-                    // DYNAMIC TEXT FIX
                     authSubmitBtn.innerText = isLoginMode ? "Login to Account" : "Register Now";
                     authSubmitBtn.disabled = false;
                 });
@@ -644,7 +642,10 @@ if (googleAuthBtn) {
             });
     });
 }
-// chat boat javascript
+
+// ==========================================
+// CHATBOT JAVASCRIPT
+// ==========================================
 const chatBox = document.getElementById("chat-box");
 const userInput = document.getElementById("user-input");
 
@@ -695,21 +696,14 @@ async function sendMessage() {
     chatBox.appendChild(typingDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // Backend request
-    // try {
-    //     // Local Flask backend ka exact URL
-    //     let response = await fetch('http://127.0.0.1:5000/chat', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ message: text })
-    //     });
     try {
-        // Asli Vercel URL - No changes needed!
-        let response = await fetch('https://sagar-portfolio-website-kappa.vercel.app/chat', {
+        // Updated route path to '/api/app' exactly as configured in Vercel
+        let response = await fetch('https://sagar-portfolio-website-kappa.vercel.app/api/app', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: text })
         });
+        
         let data = await response.json();
 
         // Remove typing and show reply
@@ -723,7 +717,6 @@ async function sendMessage() {
         const typingElement = document.getElementById("typing-indicator");
         if (typingElement) typingElement.remove();
 
-        // Isko badal kar thoda professional message daal dein
         appendMessage("AI Assistant is temporarily unavailable. Please try again later.", "bot");
     }
 }

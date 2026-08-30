@@ -11,15 +11,17 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-@app.route('/chat', methods=['POST', 'OPTIONS'])
+# Master catch-all route to handle Vercel's dynamic routing
+@app.route('/', defaults={'path': ''}, methods=['POST', 'OPTIONS'])
+@app.route('/<path:path>', methods=['POST', 'OPTIONS'])
 @cross_origin()
-def chat_with_ai():
+def chat_with_ai(path):
     # OPTIONS request (Preflight) ko explicitly handle aur allow karne ke liye headers
     if request.method == "OPTIONS":
         response = make_response(jsonify({"status": "ok"}))
         response.headers.add("Access-Control-Allow-Origin", "*")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS, GET")
         return response, 200
         
     try:
@@ -37,11 +39,11 @@ def chat_with_ai():
                     CRITICAL RULE: Respond ONLY in English. Do not add unnecessary greetings.
 
                     EXACT RESPONSE MATCHING (Follow this strictly):
-                    - IF user says EXACTLY "hi", "hello", "hey": ALWAYS reply with "Hello! I am the official Elara AI for Sagar Kumar's personal portfolio website. How can I help you today?"
-                    - IF user asks "who are you", "what is your name": ALWAYS reply with "I am the official Elara AI for Sagar Kumar's personal portfolio website."
-                    - IF user says "talk to sagar", "I can talk to the sagar", "contact sagar", "phone", "email": ALWAYS reply with "Sagar is currently unavailable, but you can reach him directly at his email (skdas1641999@gmail.com)."
+                    - IF user says EXACTLY "hi", "hello", "hey": ALWAYS reply with "Hello! I am the official Elara AI for this personal portfolio website. How can I help you today?"
+                    - IF user asks "who are you", "what is your name": ALWAYS reply with "I am the official Elara AI for this personal portfolio website."
+                    - IF user says "contact", "phone", "email": ALWAYS reply with "The engineer is currently unavailable, but you can reach out directly via email (skdas1641999@gmail.com)."
 
-                    PROFILE OF SAGAR KUMAR (Use this to answer other technical or professional questions):
+                    PROFILE OF THE ENGINEER (Use this to answer other technical or professional questions):
                     - Role: Manual & Automation Testing Engineer
                     - Experience: Over 3+ years in web, mobile, and API testing.
                     - Current Company: Software Testing Engineer at Onelap Telematics Pvt. Ltd. (March 2023 - Present).
@@ -61,8 +63,8 @@ def chat_with_ai():
                     ONELAP WEB PLATFORM & GPS DASHBOARD TESTING (web.onelap.in):
                     - Core Portal Testing: Tested the Onelap Web Control Panel (https://web.onelap.in) designed for live fleet tracking and asset management.
                     - Authentication Module: Verified secure User Login and Registration flows, including language localization configuration (English selection dropdown), phone/password edge-case input validations, and 'Remember Me' state preservation.
-                    - Live Tracking Dashboard & Data Sync: Validated the real-time device management system. Tested the dynamic rendering of the 'Devices' list panel alongside their exact asynchronous timestamps (e.g., tracking the status of hardware variations like 'locoshieldwithot_sim').
-                    - Map API & Coordinates Integration: Extensively tested the integration of live mapping systems (OpenStreetMap/Google Maps UI). Confirmed accurate visual rendering of real-time GPS asset location markers dynamically over high-density traffic grids and regional maps (e.g., Bengaluru region grids like Majestic, Chickpete).
+                    - Live Tracking Dashboard & Data Sync: Validated the real-time device management system. Tested the dynamic rendering of the 'Devices' list panel alongside their exact asynchronous timestamps.
+                    - Map API & Coordinates Integration: Extensively tested the integration of live mapping systems (OpenStreetMap/Google Maps UI). Confirmed accurate visual rendering of real-time GPS asset location markers dynamically over high-density traffic grids and regional maps.
                     - Analytics & Reporting Engine: Evaluated the multi-option reporting dropdown interface. Tested data retrieval filters for 'Route' path histories, system 'Events' logging, chronological 'Trips' logs, and data-driven 'Summary' tables. Validated critical control states for action triggers like 'Configure', 'Show', 'Export' (handling CSV/data sheet generation), and 'Clear' states.
                     
                     TECHNICAL SKILLS:
