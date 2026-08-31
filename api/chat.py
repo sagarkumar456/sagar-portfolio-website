@@ -19,8 +19,8 @@ def handle_chat(path):
         
         client = Groq(api_key=api_key)
         completion = client.chat.completions.create(
-            # Yahan ekdum stable Mixtral model laga diya hai
-            model="mixtral-8x7b-32768", 
+            # Groq ka sabse latest, active aur stable model
+            model="gemma2-9b-it", 
             temperature=0.1,
             messages=[
                 {
