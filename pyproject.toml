@@ -1,6 +1,10 @@
 [project]
 name = "sagar-portfolio"
 version = "1.0.0"
+dependencies = [
+    "Flask",
+    "groq"
+]
 
 [tool.vercel]
 entrypoint = "api.chat:app"
