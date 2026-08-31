@@ -19,8 +19,8 @@ def handle_chat(path):
         
         client = Groq(api_key=api_key)
         completion = client.chat.completions.create(
-            # Groq ka sabse latest, active aur stable model
-            model="gemma2-9b-it", 
+            # Groq ka bilkul naya aur active model
+            model="llama-3.2-3b-preview", 
             temperature=0.1,
             messages=[
                 {
