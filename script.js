@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const preloader = document.getElementById("preloader");
 
     if (!sessionStorage.getItem("hasSeenPreloader")) {
-        // Pehli baar aane par preloader chalega
         setTimeout(() => {
             if (preloader) {
                 preloader.style.opacity = "0";
@@ -21,15 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(typeEffect, 500);
 
         }, 4000);
-
         sessionStorage.setItem("hasSeenPreloader", "true");
-
     } else {
-        // Back aane par preloader turant gayab
         if (preloader) {
             preloader.style.display = "none";
         }
-
         const header = document.querySelector('header');
         if (header) header.classList.add('show');
         setTimeout(typeEffect, 100);
@@ -126,7 +121,7 @@ cards.forEach(card => {
 });
 
 // ==========================================
-// 5. TYPEWRITER EFFECT (UPDATED LIST)
+// 5. TYPEWRITER EFFECT
 // ==========================================
 const textArray = [
     "Hunting bugs before they reach users.",
@@ -142,12 +137,11 @@ let isDeleting = false;
 const typewriterElement = document.getElementById('typewriter');
 
 if (typewriterElement) {
-    typewriterElement.style.color = "#60C09B"; // Mint Green Color
+    typewriterElement.style.color = "#60C09B";
 }
 
 function typeEffect() {
     if (!typewriterElement) return;
-
     const currentText = textArray[typeIdx];
 
     if (isDeleting) {
@@ -169,12 +163,11 @@ function typeEffect() {
         typeIdx = (typeIdx + 1) % textArray.length;
         typeSpeed = 500;
     }
-
     setTimeout(typeEffect, typeSpeed);
 }
 
 // ==========================================
-// 6. SCROLL ANIMATIONS (INTERSECTION OBSERVER)
+// 6. SCROLL ANIMATIONS
 // ==========================================
 const observerOptions = {
     root: null,
@@ -195,7 +188,7 @@ const hiddenElements = document.querySelectorAll('.hidden-fade, .hidden-3d');
 hiddenElements.forEach((el) => scrollObserver.observe(el));
 
 // ==========================================
-// 7. SWAYING TOOLS WITH "PATAKHA" BLAST 🧨
+// 7. SWAYING TOOLS WITH PATAKHA BLAST
 // ==========================================
 const logContainer = document.getElementById('log-container');
 const testingTools = [
@@ -219,7 +212,6 @@ function createPatakha(x, y) {
         const color = colors[Math.floor(Math.random() * colors.length)];
         particle.style.backgroundColor = color;
         particle.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
-
         particle.style.left = x + 'px';
         particle.style.top = y + 'px';
 
@@ -232,71 +224,47 @@ function createPatakha(x, y) {
         particle.style.setProperty('--ty', `${ty}px`);
 
         document.body.appendChild(particle);
-
-        setTimeout(() => {
-            particle.remove();
-        }, 600);
+        setTimeout(() => particle.remove(), 600);
     }
 }
 
 function createToolBadge() {
     if (!logContainer) return;
-
     const badge = document.createElement('div');
     badge.className = 'floating-tool';
     badge.innerText = testingTools[Math.floor(Math.random() * testingTools.length)];
-
     badge.style.left = Math.random() * 80 + 10 + 'vw';
     badge.style.fontSize = (Math.random() * 0.4 + 0.9) + 'rem';
     badge.style.animationDuration = (Math.random() * 10 + 15) + 's';
 
     badge.addEventListener('click', function (e) {
         e.stopPropagation();
-
         const rect = this.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-
         createPatakha(centerX, centerY);
         this.remove();
     });
 
     logContainer.appendChild(badge);
-
-    setTimeout(() => {
-        if (badge.parentNode) {
-            badge.remove();
-        }
-    }, 25000);
+    setTimeout(() => { if (badge.parentNode) badge.remove(); }, 25000);
 }
 
-if (logContainer) {
-    setInterval(createToolBadge, 1500);
-}
+if (logContainer) setInterval(createToolBadge, 1500);
 
 // ==========================================
-// 8. API TRACKING FOR "VIEW DETAILS" BUTTON
+// 8. API TRACKING FOR DETAILS BUTTON
 // ==========================================
 const coreTestingBtn = document.getElementById('core-testing-btn');
-
 if (coreTestingBtn) {
     coreTestingBtn.addEventListener('click', async function (event) {
         event.preventDefault();
-
         const skillName = this.getAttribute('data-skill');
         const targetUrl = this.getAttribute('href');
-
         const apiUrl = `http://127.0.0.1:8000/api/track-click?skill=${skillName}`;
 
         try {
-            await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log("Click tracked successfully in Backend!");
-
+            await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' } });
         } catch (error) {
             console.log("Tracking API failed, but user will not be blocked.");
         } finally {
@@ -305,9 +273,8 @@ if (coreTestingBtn) {
     });
 }
 
-
 // ==========================================
-// 14. RESUME DOWNLOAD TRACKER (WITH SECURE EMAIL CHECK)
+// 14. RESUME DOWNLOAD TRACKER
 // ==========================================
 const resumeBtn = document.getElementById('resume-btn');
 const emailFormContainer = document.getElementById('email-form-container');
@@ -315,62 +282,45 @@ const visitorEmail = document.getElementById('visitor-email');
 const submitEmailBtn = document.getElementById('submit-email-btn');
 const countDisplay = document.getElementById('download-count');
 
-// Your Firebase Database URL
 const FIREBASE_DB_URL = "https://sagar-portfolio-d89f9-default-rtdb.asia-southeast1.firebasedatabase.app"; 
 
-// 1. Fetch live count on page load
 async function fetchFirebaseCount() {
     try {
         let response = await fetch(`${FIREBASE_DB_URL}/resume_downloads.json`);
         if (!response.ok) throw new Error("Network response was not ok");
-        
         let data = await response.json();
         let currentCount = (data !== null && data !== undefined) ? data : 0;
-        
-        if (countDisplay) {
-            countDisplay.innerText = `(${currentCount})`;
-        }
+        if (countDisplay) countDisplay.innerText = `(${currentCount})`;
     } catch (error) {
         console.log("Firebase Read Failed:", error);
     }
 }
 
-// Initialize Count Fetching and Button Click Event
 if (resumeBtn) {
     fetchFirebaseCount();
-
-    // Show the email form when "Download Resume" is clicked
     resumeBtn.addEventListener('click', function(e) {
         e.preventDefault();
         resumeBtn.style.display = 'none'; 
-        if (emailFormContainer) {
-            emailFormContainer.style.display = 'flex'; 
-        }
+        if (emailFormContainer) emailFormContainer.style.display = 'flex'; 
     });
 }
 
-// Function to create a Toast Notification
 function showToast(message, color, shadowColor) {
     const toastMessage = document.createElement('div');
     toastMessage.innerText = message;
-    
     toastMessage.style.cssText = `position: fixed; bottom: 30px; right: 30px; background: ${color}; color: #fff; padding: 12px 20px; border-radius: 8px; font-weight: bold; z-index: 999999; box-shadow: 0 4px 15px ${shadowColor}; transition: opacity 0.5s ease;`;
-    
     document.body.appendChild(toastMessage);
-
     setTimeout(() => {
         toastMessage.style.opacity = '0';
         setTimeout(() => toastMessage.remove(), 500);
     }, 3000);
 }
 
-// 2. Handle Email Submission, Secure Duplicate Check & File Download
 if (submitEmailBtn) {
     submitEmailBtn.addEventListener('click', async function(e) {
         e.preventDefault();
         const emailValue = visitorEmail.value.trim().toLowerCase();
 
-        // Validate Email Format
         if (!emailValue || !emailValue.includes('@')) {
             showToast("⚠️ Please enter a valid email address!", "#ffaa00", "rgba(255, 170, 0, 0.4)");
             return;
@@ -380,29 +330,20 @@ if (submitEmailBtn) {
         submitEmailBtn.disabled = true;
 
         try {
-            // STEP A: SECURE API CALL (Data Exposure Bug Fixed)
-            // Ab poora database fetch nahi hoga, sirf yeh specific email search hoga
             let emailCheckResponse = await fetch(`${FIREBASE_DB_URL}/resume_emails.json?orderBy="email"&equalTo="${emailValue}"`);
             let emailData = await emailCheckResponse.json();
-            
-            // Agar emailData khali nahi hai, matlab email mil gaya (Duplicate hai)
             let alreadyDownloaded = (emailData !== null && Object.keys(emailData).length > 0);
 
-            // If duplicate found, show warning and stop the process
             if (alreadyDownloaded) {
                 showToast("⚠️ You have already downloaded the resume with this email!", "#ffaa00", "rgba(255, 170, 0, 0.4)");
-                
-                // Reset UI
                 if (emailFormContainer) emailFormContainer.style.display = 'none';
                 resumeBtn.style.display = 'flex';
                 visitorEmail.value = '';
                 submitEmailBtn.innerText = "SUBMIT";
                 submitEmailBtn.disabled = false;
-                
-                return; // Stops execution here, no download will happen
+                return;
             }
 
-            // STEP B: Force the PDF download
             const link = document.createElement('a');
             link.href = 'video/cv/new_cv (1).pdf'; 
             link.download = 'Resume.pdf';
@@ -410,11 +351,9 @@ if (submitEmailBtn) {
             link.click();
             document.body.removeChild(link);
 
-            // STEP C: Update Download Count in Firebase
             let response = await fetch(`${FIREBASE_DB_URL}/resume_downloads.json`);
             let data = await response.json();
-            let currentCount = (data !== null && data !== undefined) ? data : 0;
-            let newCount = currentCount + 1;
+            let newCount = ((data !== null && data !== undefined) ? data : 0) + 1;
 
             await fetch(`${FIREBASE_DB_URL}/resume_downloads.json`, {
                 method: 'PUT',
@@ -422,27 +361,18 @@ if (submitEmailBtn) {
                 headers: { 'Content-Type': 'application/json' }
             });
 
-            // STEP D: Save Email Address in Firebase
             await fetch(`${FIREBASE_DB_URL}/resume_emails.json`, {
                 method: 'POST', 
-                body: JSON.stringify({ 
-                    email: emailValue, 
-                    downloadedAt: new Date().toLocaleString() 
-                }),
+                body: JSON.stringify({ email: emailValue, downloadedAt: new Date().toLocaleString() }),
                 headers: { 'Content-Type': 'application/json' }
             });
 
-            // STEP E: Update UI Counter
-            if (countDisplay) {
-                countDisplay.innerText = `(${newCount})`;
-            }
-            
-            // STEP F: Reset UI and show success toast
+            if (countDisplay) countDisplay.innerText = `(${newCount})`;
             if (emailFormContainer) emailFormContainer.style.display = 'none';
             resumeBtn.style.display = 'flex';
             visitorEmail.value = ''; 
             
-            showToast("🎉 Resume downloaded successfully! Thank you.", "#00f3ff", "rgba(0, 243, 255, 0.4)");
+            showToast("🎉 Resume downloaded successfully!", "#00f3ff", "rgba(0, 243, 255, 0.4)");
 
         } catch (error) {
             console.error("Download Error:", error);
@@ -453,40 +383,27 @@ if (submitEmailBtn) {
         }
     });
 }
-// ==========================================
-// 15. LOGIN & REGISTRATION LOGIC WITH FIREBASE
-// ==========================================
 
-// ULTIMATE Z-INDEX TOAST (Sirf Login/Register form ke liye taaki blur ke upar aaye)
+// ==========================================
+// 15. LOGIN & REGISTRATION LOGIC
+// ==========================================
 function showAuthToast(message, color, shadowColor) {
     const toastMessage = document.createElement('div');
     toastMessage.innerText = message;
-    
-    // Z-index maximum (2147483647) aur !important lagaya hai 
     toastMessage.style.cssText = `
-        position: fixed !important; 
-        bottom: 30px !important; 
-        right: 30px !important; 
-        background: ${color} !important; 
-        color: #ffffff !important; 
-        padding: 12px 20px !important; 
-        border-radius: 8px !important; 
-        font-weight: bold !important; 
-        z-index: 2147483647 !important; 
-        box-shadow: 0 4px 15px ${shadowColor} !important; 
-        transition: opacity 0.5s ease !important;
+        position: fixed !important; bottom: 30px !important; right: 30px !important; 
+        background: ${color} !important; color: #ffffff !important; padding: 12px 20px !important; 
+        border-radius: 8px !important; font-weight: bold !important; z-index: 2147483647 !important; 
+        box-shadow: 0 4px 15px ${shadowColor} !important; transition: opacity 0.5s ease !important;
         pointer-events: none !important;
     `;
-    
     document.body.appendChild(toastMessage);
-
     setTimeout(() => {
         toastMessage.style.opacity = '0';
         setTimeout(() => toastMessage.remove(), 500);
     }, 3000);
 }
 
-// 1. Your Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBwsMbPGzq73oMxqOfOz7673GwMGVzi-gg",
     authDomain: "sagar-portfolio-d89f9.firebaseapp.com",
@@ -498,13 +415,9 @@ const firebaseConfig = {
     measurementId: "G-YETL3C0X2Y"
 };
 
-// 2. Initialize Firebase Application
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// UI Element Variables
 const navLoginBtn = document.getElementById('nav-login-btn');
 const navRegisterBtn = document.getElementById('nav-register-btn');
 const authModal = document.getElementById('auth-modal');
@@ -518,10 +431,8 @@ const googleAuthBtn = document.getElementById('google-auth-btn');
 
 let isLoginMode = true; 
 
-// Function to open and toggle the Authentication Modal
 function openAuthModal(mode) {
     if (!authModal) return;
-    
     isLoginMode = (mode === 'login');
     
     if (isLoginMode) {
@@ -535,22 +446,17 @@ function openAuthModal(mode) {
         authToggleText.innerText = "Already have an account?";
         authToggleLink.innerText = "Login here";
     }
-    
     authModal.classList.add('active');
 }
 
-// Handle Login / Logout Event
 if (navLoginBtn) {
     navLoginBtn.addEventListener('click', () => {
         const currentText = navLoginBtn.innerText.trim().toLowerCase();
-        
         if (currentText === "logout") {
             auth.signOut().then(() => {
                 showAuthToast("Logged out successfully!", "#00f3ff", "rgba(0, 243, 255, 0.4)");
                 navLoginBtn.innerText = "Login";
                 if(navRegisterBtn) navRegisterBtn.style.display = "inline-block";
-            }).catch((error) => {
-                showAuthToast("⚠️ Logout Error: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)");
             });
         } else {
             openAuthModal('login');
@@ -559,28 +465,12 @@ if (navLoginBtn) {
 }
 
 if (navRegisterBtn) navRegisterBtn.addEventListener('click', () => openAuthModal('register'));
+if (closeAuthBtn) closeAuthBtn.addEventListener('click', () => { authModal.classList.remove('active'); if(authForm) authForm.reset(); });
+if (authToggleLink) authToggleLink.addEventListener('click', (e) => { e.preventDefault(); openAuthModal(isLoginMode ? 'register' : 'login'); });
 
-// Event Listener to close the Authentication Modal
-if (closeAuthBtn) {
-    closeAuthBtn.addEventListener('click', () => {
-        authModal.classList.remove('active');
-        if(authForm) authForm.reset(); 
-    });
-}
-
-// Event Listener to toggle between Login and Register
-if (authToggleLink) {
-    authToggleLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        openAuthModal(isLoginMode ? 'register' : 'login');
-    });
-}
-
-// 3. Email and Password Submission Logic
 if (authForm) {
     authForm.addEventListener('submit', (e) => {
         e.preventDefault(); 
-        
         const email = document.getElementById('auth-email').value;
         const password = document.getElementById('auth-password').value;
         
@@ -596,50 +486,32 @@ if (authForm) {
                     navLoginBtn.innerText = "Logout";
                     if(navRegisterBtn) navRegisterBtn.style.display = "none";
                 })
-                .catch((error) => {
-                    showAuthToast("⚠️ Login Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)");
-                })
-                .finally(() => {
-                    authSubmitBtn.innerText = isLoginMode ? "Login to Account" : "Register Now";
-                    authSubmitBtn.disabled = false;
-                });
+                .catch((error) => showAuthToast("⚠️ Login Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)"))
+                .finally(() => { authSubmitBtn.innerText = "Login to Account"; authSubmitBtn.disabled = false; });
         } else {
             auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
+                .then(() => {
                     showAuthToast("🎉 Registration Successful! You can now login.", "#00f3ff", "rgba(0, 243, 255, 0.4)");
                     openAuthModal('login'); 
                 })
-                .catch((error) => {
-                    showAuthToast("⚠️ Registration Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)");
-                })
-                .finally(() => {
-                    authSubmitBtn.innerText = isLoginMode ? "Login to Account" : "Register Now";
-                    authSubmitBtn.disabled = false;
-                });
+                .catch((error) => showAuthToast("⚠️ Registration Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)"))
+                .finally(() => { authSubmitBtn.innerText = "Register Now"; authSubmitBtn.disabled = false; });
         }
     });
 }
 
-// 4. Google OAuth Authentication Logic
 if (googleAuthBtn) {
     googleAuthBtn.addEventListener('click', () => {
         const provider = new firebase.auth.GoogleAuthProvider();
-        
         firebase.auth().signInWithPopup(provider)
             .then((result) => {
-                const user = result.user;
-                showAuthToast(`🎉 Google Login Successful! Welcome, ${user.displayName}`, "#00f3ff", "rgba(0, 243, 255, 0.4)");
-                
+                showAuthToast(`🎉 Google Login Successful! Welcome, ${result.user.displayName}`, "#00f3ff", "rgba(0, 243, 255, 0.4)");
                 if (authModal) authModal.classList.remove('active');
                 if (authForm) authForm.reset();
-                
                 if (navLoginBtn) navLoginBtn.innerText = "Logout";
                 if (navRegisterBtn) navRegisterBtn.style.display = "none";
             })
-            .catch((error) => {
-                console.error("Google Auth Error:", error);
-                showAuthToast("⚠️ Google Auth Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)");
-            });
+            .catch((error) => showAuthToast("⚠️ Google Auth Failed: " + error.message, "#ff4444", "rgba(255, 68, 68, 0.4)"));
     });
 }
 
@@ -649,7 +521,6 @@ if (googleAuthBtn) {
 const chatBox = document.getElementById("chat-box");
 const userInput = document.getElementById("user-input");
 
-// Toggle logic for open/close chat
 function toggleChat() {
     const chatContainer = document.getElementById("chat-container");
     const toggleBtn = document.getElementById("chat-toggle-btn");
@@ -666,17 +537,9 @@ function toggleChat() {
 function appendMessage(text, sender) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message");
-
-    if (sender === "user") {
-        messageDiv.classList.add("user-message");
-    } else {
-        messageDiv.classList.add("bot-message");
-    }
-
+    messageDiv.classList.add(sender === "user" ? "user-message" : "bot-message");
     messageDiv.innerText = text;
     chatBox.appendChild(messageDiv);
-
-    // Auto-scroll
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -684,11 +547,9 @@ async function sendMessage() {
     const text = userInput.value.trim();
     if (text === "") return;
 
-    // User message
     appendMessage(text, "user");
     userInput.value = "";
 
-    // Typing indicator
     const typingDiv = document.createElement("div");
     typingDiv.classList.add("message", "bot-message");
     typingDiv.innerText = "Typing...";
@@ -697,8 +558,8 @@ async function sendMessage() {
     chatBox.scrollTop = chatBox.scrollHeight;
 
     try {
-        // Updated route path to '/api/app' exactly as configured in Vercel
-        let response = await fetch('https://sagar-portfolio-website-kappa.vercel.app/api/app', {
+        // Correct fetch URL for the new zero-config api/index.py route
+        let response = await fetch('https://sagar-portfolio-website-kappa.vercel.app/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: text })
@@ -706,7 +567,6 @@ async function sendMessage() {
         
         let data = await response.json();
 
-        // Remove typing and show reply
         const typingElement = document.getElementById("typing-indicator");
         if (typingElement) typingElement.remove();
 
@@ -721,7 +581,6 @@ async function sendMessage() {
     }
 }
 
-// Enter key press handling
 function handleKeyPress(event) {
     if (event.key === "Enter") {
         sendMessage();
