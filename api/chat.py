@@ -4,7 +4,6 @@ from flask_cors import CORS
 from groq import Groq
 
 app = Flask(__name__)
-# CORS(app) automatically handles all OPTIONS preflight requests correctly
 CORS(app) 
 
 @app.route('/', defaults={'path': ''}, methods=['POST', 'GET'])
@@ -20,13 +19,13 @@ def handle_chat(path):
         
         client = Groq(api_key=api_key)
         completion = client.chat.completions.create(
-            # Duplicate model hata kar sirf ek stable model rakha hai
-            model="llama3-8b-8192", 
+            # Yahan humne naya active model daal diya hai
+            model="llama-3.1-8b-instant", 
             temperature=0.1,
             messages=[
                 {
                     "role": "system",
-                    "content": "You are Elara, the AI assistant for this portfolio website. The engineer is a QA Automation Engineer (do not use the engineer's personal name in testing demonstration content). Contact: skdas1641999@gmail.com"
+                    "content": "You are Elara, the AI assistant for this portfolio website. The engineer is a QA Automation Engineer (never use the engineer's personal name). Contact: skdas1641999@gmail.com"
                 },
                 {"role": "user", "content": user_message}
             ]
@@ -36,6 +35,5 @@ def handle_chat(path):
     except Exception as e:
         return jsonify({"reply": f"API Error: {str(e)}"}), 200
 
-# Required for Vercel
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
