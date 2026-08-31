@@ -559,10 +559,12 @@ async function sendMessage() {
 
     try {
         // Correct fetch URL for the new zero-config api/index.py route
-        let response = await fetch('https://sagar-portfolio-website-kappa.vercel.app/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
+         let response = await fetch('https://sagar-portfolio-website-kappa.vercel.app/api/chat', {
+                 method: 'POST', // Yeh zaroori hai
+                    eaders: {
+                'Content-Type': 'application/json' // Yeh 415 error ko rokta hai
+             },
+                body: JSON.stringify({ message: userMessage })
         });
         
         let data = await response.json();
