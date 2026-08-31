@@ -7,21 +7,20 @@ from dotenv import load_dotenv
 load_dotenv()
 app = Flask(__name__)
 
-# Basic CORS setup
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-# Route exact match for Vercel Zero-Config
-@app.route('/api/chat', methods=['POST', 'OPTIONS'])
+# Master catch-all route so Flask never rejects Vercel's path
+@app.route('/', defaults={'path': ''}, methods=['POST', 'OPTIONS'])
+@app.route('/<path:path>', methods=['POST', 'OPTIONS'])
 @cross_origin()
-def chat_with_ai():
-    # Preflight (OPTIONS) explicitly handled for CORS
+def chat_with_ai(path):
     if request.method == "OPTIONS":
         response = make_response(jsonify({"status": "ok"}))
         response.headers.add("Access-Control-Allow-Origin", "*")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS, GET")
         return response, 200
         
     try:
