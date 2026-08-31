@@ -1,2 +1,6 @@
+[project]
+name = "sagar-portfolio"
+version = "1.0.0"
+
 [tool.vercel]
 entrypoint = "api.chat:app"
