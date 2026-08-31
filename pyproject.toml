@@ -3,7 +3,8 @@ name = "sagar-portfolio"
 version = "1.0.0"
 dependencies = [
     "Flask",
-    "groq"
+    "groq",
+    "Flask-CORS"
 ]
 
 [tool.vercel]
