@@ -1,31 +1,38 @@
 import os
 from flask import Flask, request, jsonify, make_response
-from flask_cors import CORS, cross_origin
 from groq import Groq
-from dotenv import load_dotenv
 
-load_dotenv()
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "*"}})
-
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-# Master catch-all route so Flask never rejects Vercel's path
-@app.route('/', defaults={'path': ''}, methods=['POST', 'OPTIONS'])
-@app.route('/<path:path>', methods=['POST', 'OPTIONS'])
-@cross_origin()
-def chat_with_ai(path):
-    if request.method == "OPTIONS":
-        response = make_response(jsonify({"status": "ok"}))
+# 1. GLOBAL CORS HANDLER: Yeh Vercel ko hamesha batayega ki CORS allow karna hai
+@app.before_request
+def handle_options():
+    if request.method == 'OPTIONS':
+        response = make_response()
         response.headers.add("Access-Control-Allow-Origin", "*")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS, GET")
-        return response, 200
-        
+        return response
+
+# Helper function: Har reply mein CORS attach karne ke liye
+def send_cors_response(data, status=200):
+    response = make_response(jsonify(data))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response, status
+
+# 2. MAIN ROUTE
+@app.route('/api/chat', methods=['POST'])
+def chat_with_ai():
     try:
+        # Check API Key first
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            return send_cors_response({"reply": "Backend Error: GROQ_API_KEY is missing in Vercel Environment Variables!"})
+
         data = request.json
-        user_message = data.get("message")
+        user_message = data.get("message", "")
+        
+        client = Groq(api_key=api_key)
         
         completion = client.chat.completions.create(
             model="llama-3.3-70b-versatile", 
@@ -34,7 +41,6 @@ def chat_with_ai(path):
                 {
                     "role": "system", 
                     "content": """You are Elara. 
-
                     CRITICAL RULE: Respond ONLY in English. Do not add unnecessary greetings.
 
                     EXACT RESPONSE MATCHING:
@@ -54,16 +60,11 @@ def chat_with_ai(path):
         )
         
         ai_reply = completion.choices[0].message.content
-        
-        final_response = make_response(jsonify({"reply": ai_reply}))
-        final_response.headers.add("Access-Control-Allow-Origin", "*")
-        return final_response
+        return send_cors_response({"reply": ai_reply})
         
     except Exception as e:
-        print("Error during Groq API call:", e)
-        error_response = make_response(jsonify({"reply": "An error occurred with the backend server."}))
-        error_response.headers.add("Access-Control-Allow-Origin", "*")
-        return error_response, 500
+        # Agar koi bhi error aaya, toh chat mein error dikhayega, CORS block nahi hoga
+        return send_cors_response({"reply": f"System Error: {str(e)}"})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000)
