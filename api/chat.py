@@ -19,13 +19,13 @@ def handle_chat(path):
         
         client = Groq(api_key=api_key)
         completion = client.chat.completions.create(
-            # Yahan humne naya active model daal diya hai
-            model="llama-3.1-8b-instant", 
+            # Yahan ekdum stable Mixtral model laga diya hai
+            model="mixtral-8x7b-32768", 
             temperature=0.1,
             messages=[
                 {
                     "role": "system",
-                    "content": "You are Elara, the AI assistant for this portfolio website. The engineer is a QA Automation Engineer (never use the engineer's personal name). Contact: skdas1641999@gmail.com"
+                    "content": "You are Elara, the AI assistant for this portfolio website. The engineer is a QA Automation Engineer. Contact: skdas1641999@gmail.com"
                 },
                 {"role": "user", "content": user_message}
             ]
