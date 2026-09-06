@@ -28,12 +28,10 @@
 }
 
 html, body {
-    /* FIX: Changed height to min-height to allow natural scrolling */
     min-height: 100vh;
     width: 100%;
     margin: 0;
     overflow-x: hidden;
-    /* Enables smooth momentum scrolling on mobile devices */
     -webkit-overflow-scrolling: touch; 
     scroll-behavior: smooth;
 }
@@ -43,7 +41,7 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-light);
     line-height: 1.6;
-    cursor: none; /* Hidden for custom cursor on desktop */
+    cursor: none; 
 }
 
 section {
@@ -85,7 +83,6 @@ h1, h2, h3 {
     transition: width 0.2s, height 0.2s, background-color 0.2s;
 }
 
-/* Hide custom cursor on touch devices to prevent issues */
 @media (hover: none) and (pointer: coarse) {
     .cursor-dot, .cursor-outline {
         display: none !important;
@@ -99,28 +96,25 @@ h1, h2, h3 {
    03. VIDEO BACKGROUND & OVERLAY
    ========================================= */
 .video-bg {
-    position: fixed; 
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    position: fixed !important; 
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;  
+    height: 100vh !important; 
     object-fit: cover !important; 
-    transform: translate(-50%, -50%); 
-    z-index: -100;
-    opacity: 0.4;
-    background-color: #0b0f19;
+    z-index: -100 !important;
+    opacity: 1 !important; 
 }
 
 .video-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: radial-gradient(circle at center, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.9) 100%);
-    z-index: -99;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: transparent !important; 
+    z-index: -99 !important;
+    pointer-events: none !important;
 }
 
 /* =========================================
@@ -282,48 +276,35 @@ header {
     margin-top: 10px;
 }
 
-/* =========================================
-   PREMIUM FUTURISTIC BUTTON (NEON-BTN)
-   ========================================= */
-
-/* 1. Base Styling & Alive Pulse Animation */
 .neon-btn {
     position: relative;
     display: inline-flex; 
     justify-content: center;
     align-items: center;
     padding: 12px 32px;
-    color: #ffffff; /* Crisp white text for readability */
+    color: #ffffff; 
     font-family: var(--font-mono, monospace);
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 2.5px;
-    
-    /* Dark glass background with cyan tint */
     background: rgba(0, 243, 255, 0.05); 
     border: 1px solid rgba(0, 243, 255, 0.4);
     border-radius: 6px;
     overflow: hidden;
     z-index: 1;
-    
-    /* Smooth transition for all hover effects */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    
-    /* Continuous subtle glowing pulse to attract clicks */
     animation: button-pulse 2.5s infinite alternate;
 }
 
-/* 2. Holographic Light Sweep (Hidden by default) */
 .neon-btn::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%; /* Hidden on the left side */
+    left: -100%; 
     width: 100%;
     height: 100%;
-    /* Gradient laser effect */
     background: linear-gradient(
         90deg,
         transparent,
@@ -334,37 +315,25 @@ header {
     z-index: -1;
 }
 
-/* 3. Hover Interaction - The "Click Me" Magic */
 .neon-btn:hover {
-    background: rgba(0, 243, 255, 0.15); /* Slightly brighter glass */
-    border-color: #00f3ff; /* Solid neon border */
+    background: rgba(0, 243, 255, 0.15); 
+    border-color: #00f3ff; 
     color: #ffffff;
-    
-    /* Pops the button up and scales it slightly */
     transform: translateY(-4px) scale(1.02);
-    
-    /* Intense futuristic glow */
     box-shadow:
         0 0 15px rgba(0, 243, 255, 0.4),
         0 0 30px rgba(0, 243, 255, 0.2),
         inset 0 0 15px rgba(0, 243, 255, 0.3);
-        
     text-shadow: 0 0 8px #00f3ff;
 }
 
-/* Trigger the light sweep animation on hover */
 .neon-btn:hover::before {
-    left: 100%; /* Moves the laser from left to right */
+    left: 100%; 
 }
 
-/* 4. Keyframes for the continuous alive pulse */
 @keyframes button-pulse {
-    0% { 
-        box-shadow: 0 0 5px rgba(0, 243, 255, 0.1), inset 0 0 5px rgba(0, 243, 255, 0.1); 
-    }
-    100% { 
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.2); 
-    }
+    0% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.1), inset 0 0 5px rgba(0, 243, 255, 0.1); }
+    100% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.2); }
 }
 
 .details-btn { 
@@ -417,14 +386,12 @@ header {
     color: #ccc; 
 }
 
-/* Grid layout update for compact cards */
 .skills-grid, .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
     gap: 1rem; 
 }
 
-/* Common card layout and padding */
 .skill-card, .project-card {
     padding: 1rem; 
     display: flex;
@@ -432,16 +399,9 @@ header {
     height: 100%; 
 }
 
-.skill-card { 
-    text-align: center; 
-}
+.skill-card { text-align: center; }
+.skill-card .icon { font-size: 2rem; margin-bottom: 0.8rem; }
 
-.skill-card .icon { 
-    font-size: 2rem; 
-    margin-bottom: 0.8rem; 
-}
-
-/* Heading styling */
 .skill-card h3, .project-card h3 {
     font-size: 0.95rem; 
     margin-bottom: 0.8rem;
@@ -454,24 +414,20 @@ header {
 .skill-card h3 { color: var(--neon-cyan); }
 .project-card h3 { color: var(--text-light); }
 
-/* Paragraph styling and Flexbox space distribution */
 .skill-card p, .project-card p {
     font-size: 0.8rem; 
     color: var(--text-muted); 
     line-height: 1.4;
-    flex-grow: 1; /* Expands text area to push button down */
+    flex-grow: 1; 
     margin-bottom: 1.5rem; 
 }
 
-/* Force buttons to align at the absolute bottom */
 .project-card .neon-btn, .skill-card .neon-btn {
     margin-top: auto; 
     align-self: flex-start; 
 }
 
-.skill-card .neon-btn {
-    align-self: center;
-}
+.skill-card .neon-btn { align-self: center; }
 
 .exp-header { 
     display: flex; 
@@ -569,9 +525,7 @@ footer {
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); 
 }
 
-.rotate-globe {
-    animation: spinEarth 15s linear infinite; 
-}
+.rotate-globe { animation: spinEarth 15s linear infinite; }
 
 @keyframes spinEarth {
     0% { transform: rotate(0deg); }
@@ -642,83 +596,95 @@ footer {
 }
 
 @keyframes explode-particle {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--tx), var(--ty)) scale(0);
-        opacity: 0;
-    }
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
 }
 
 /* =========================================
-   13. RESPONSIVE (MOBILE FIXES)
+   13. RESPONSIVE (MOBILE FIXES) - UPDATED
    ========================================= */
 @media (max-width: 768px) {
-    /* SCROLL FIX REMOVED 100vh TRAP FROM HERE */
-    
-    header { 
-        justify-content: center; 
-    }
-    
+    header { justify-content: center; }
     .hero-content { 
         width: 100vw; 
         justify-content: center !important;
         align-items: center !important;
     }
     
+    /* MOBILE VIDEO FIX */
     .video-bg {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;  
+        height: 100% !important; 
         object-fit: cover !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        position: fixed;
+        z-index: -100 !important;
+        opacity: 1 !important;
     }
     
     .video-overlay { 
-        width: 100vw; 
-        height: 100vh; 
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important; 
+        height: 100% !important; 
+        background: rgba(0, 0, 0, 0.4) !important; 
+        z-index: -99 !important;
     }
     
+    /* --- TEXT READABILITY & SIZE FIXES --- */
     h1, .hero-title, .glitch { 
         font-size: 2.5rem !important; 
-        margin-bottom: 10px !important;
+        margin-bottom: 5px !important;
+        color: #ffffff !important;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9) !important;
     }
-    
-    /* OVERLAPPING TEXT FIX */
+
+    /* --- TYPEWRITER TEXT OVERLAP FIX --- */
     .typewriter-container {
         height: auto !important; 
         min-height: 60px !important; 
-        margin-bottom: 10px !important; 
-        display: block; 
+        margin-bottom: 25px !important; 
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9) !important;
+        font-weight: bold !important;
+        padding: 0 10px;
     }
 
     #typewriter {
-        font-size: 1.1rem !important;
+        font-size: 1rem !important;
         line-height: 1.5 !important;
-        white-space: normal; 
+        word-wrap: break-word !important; 
+        white-space: pre-wrap !important; 
     }
 
     .cursor-blink, .typewriter-cursor {
-        height: 1.2rem !important;
+        height: 1.1rem !important;
         width: 8px !important;
         vertical-align: middle;
         display: inline-block;
     }
 
     .subtitle { 
-        font-size: 1rem !important; 
+        font-size: 0.95rem !important; 
         margin-top: 15px !important; 
-        line-height: 1.5 !important;
+        line-height: 1.6 !important;
         padding: 0 15px;
+        color: #ffffff !important;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9) !important;
+        font-weight: 500 !important;
     }
     
     section { padding: 4rem 5%; }
     
     .exp-header { flex-direction: column; align-items: flex-start; gap: 10px; }
     
-    .logo-container { top: 20px; left: 20px; }
-    .logo-img { height: 45px; width: 45px; }
+    /* Logo Overlap Fix */
+    .logo-container { top: 15px !important; left: 15px !important; }
+    .logo-img { height: 38px !important; width: 38px !important; }
 
     .main-container, .content-wrapper, main, header {
         background: transparent !important;
@@ -729,18 +695,18 @@ footer {
     /* MOBILE BUTTONS POSITIONING FIX */
     .contact-links {
         flex-direction: column !important; 
-        gap: 15px !important; 
+        gap: 12px !important; 
         width: 100% !important;
         align-items: center !important;
-        margin-top: 25px !important;
+        margin-top: 20px !important;
     }
 
     .contact-links .neon-btn {
         width: 85% !important; 
         text-align: center;
         justify-content: center;
-        padding: 12px 20px !important;
-        font-size: 0.95rem !important;
+        padding: 10px 20px !important;
+        font-size: 0.9rem !important;
     }
     
     #download-count {
@@ -748,7 +714,6 @@ footer {
         margin-left: 5px;
     }
 
-    /* CARDS SINGLE COLUMN ON MOBILE */
     .skills-grid, .project-grid {
         grid-template-columns: 1fr; 
         gap: 1rem; 
@@ -756,6 +721,18 @@ footer {
     
     .skill-card, .project-card {
         padding: 1.5rem; 
+    }
+    
+    /* --- AUTH BUTTONS OVERLAP FIX --- */
+    .auth-container {
+        top: 15px !important;
+        right: 15px !important;
+        gap: 8px !important;
+    }
+    .auth-container .neon-btn {
+        padding: 6px 10px !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 1px !important;
     }
 }
 
@@ -788,11 +765,7 @@ footer {
     transition: opacity 0.3s ease;
 }
 
-/* When form is active */
-.auth-modal.active {
-    opacity: 1;
-    pointer-events: auto;
-}
+.auth-modal.active { opacity: 1; pointer-events: auto; }
 
 .auth-box {
     width: 90%;
@@ -829,46 +802,17 @@ footer {
     transition: transform 0.2s;
 }
 
-.close-btn:hover {
-    transform: scale(1.2);
-    color: #fff;
-}
-/* =========================================
-   AUTH MODAL CURSOR FIX
-========================================= */
+.close-btn:hover { transform: scale(1.2); color: #fff; }
 
-/* 1. Restore default arrow cursor on the modal background */
-#auth-modal {
-    cursor: default !important; 
-}
-
-/* 2. Set text cursor for Email and Password input fields */
-#auth-modal input {
-    cursor: text !important;
-}
-
-/* 3. Set pointer (hand icon) cursor for all buttons and links */
+/* AUTH MODAL CURSOR FIX */
+#auth-modal { cursor: default !important; }
+#auth-modal input { cursor: text !important; }
 #auth-modal button,
 #auth-modal a,
 #auth-toggle-link,
 .close-btn,
-#google-auth-btn {
-    cursor: pointer !important;
-}
+#google-auth-btn { cursor: pointer !important; }
 
-@media (max-width: 768px) {
-    .auth-container {
-        top: 20px;
-        right: 20px;
-        gap: 10px;
-    }
-    .auth-container .neon-btn {
-        padding: 6px 10px !important;
-        font-size: 0.75rem !important;
-    }
-}
-
-/* GOOGLE SIGN-IN BUTTON STYLE */
 .google-btn {
     display: flex;
     align-items: center;
@@ -895,9 +839,7 @@ footer {
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
 }
 
-.google-btn img {
-    display: block;
-}
+.google-btn img { display: block; }
 
 /* =========================================
    15. CHATBOT SYSTEM
@@ -920,7 +862,7 @@ footer {
     mix-blend-mode: normal !important; 
     backdrop-filter: none !important; 
     filter: none !important;
-    cursor: default !important; /* Prevents custom cursor from hiding native cursor */
+    cursor: default !important; 
 }
 
 .chat-header {
@@ -955,19 +897,8 @@ footer {
     line-height: 1.4;
 }
 
-.user-message {
-    background: #007bff;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 4px;
-}
-
-.bot-message {
-    background: #f1f1f1;
-    color: #333;
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-}
+.user-message { background: #007bff; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+.bot-message { background: #f1f1f1; color: #333; align-self: flex-start; border-bottom-left-radius: 4px; }
 
 .input-area {
     display: flex;
@@ -987,12 +918,8 @@ footer {
     background-color: #ffffff !important;
     color: #333 !important;
 }
+.input-area input:focus { border-color: #007bff; }
 
-.input-area input:focus {
-    border-color: #007bff;
-}
-
-/* SEND MESSAGE BUTTON */
 .input-area button {
     background-color: #007bff !important;
     color: white !important;
@@ -1015,7 +942,6 @@ footer {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
 }
 
-/* HEADER CLOSE BUTTON */
 .chat-header .close-btn {
     cursor: pointer !important; 
     font-size: 18px;
@@ -1023,13 +949,8 @@ footer {
     padding: 0 5px;
     position: static; 
 }
+.chat-header .close-btn:hover { color: #ffcccc !important; transform: scale(1.2) !important; }
 
-.chat-header .close-btn:hover {
-    color: #ffcccc !important; 
-    transform: scale(1.2) !important; 
-}
-
-/* MAIN CHAT TOGGLE BUTTON */
 #chat-toggle-btn {
     position: fixed;
     bottom: 30px;
@@ -1049,45 +970,28 @@ footer {
     justify-content: center;
     transition: all 0.3s ease-in-out !important;
 }
-
-#chat-toggle-btn:hover {
-    background-color: #0056b3 !important;
-    transform: scale(1.15) !important;
-}
+#chat-toggle-btn:hover { background-color: #0056b3 !important; transform: scale(1.15) !important; }
 
 /* =========================================
-   BUG TRACKER CARDS STYLING (HORIZONTAL SCROLL)
+   BUG TRACKER CARDS STYLING 
 ========================================= */
 .bug-grid {
     display: flex;
     overflow-x: auto;
     gap: 25px;
-    padding: 10px 10px 30px 10px; /* Bottom padding for the scrollbar */
-    scroll-snap-type: x mandatory; /* Smooth snapping effect */
+    padding: 10px 10px 30px 10px; 
+    scroll-snap-type: x mandatory; 
     scroll-behavior: smooth;
 }
 
-/* Custom Neon Scrollbar for Bug Grid */
-.bug-grid::-webkit-scrollbar {
-    height: 8px;
-}
-.bug-grid::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-.bug-grid::-webkit-scrollbar-thumb {
-    background: rgba(0, 243, 255, 0.3);
-    border-radius: 10px;
-    transition: 0.3s;
-}
-.bug-grid::-webkit-scrollbar-thumb:hover {
-    background: #00f3ff; /* Glow on hover */
-}
+.bug-grid::-webkit-scrollbar { height: 8px; }
+.bug-grid::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+.bug-grid::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.3); border-radius: 10px; transition: 0.3s; }
+.bug-grid::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
 
-/* BUG CARD STYLING */
 .bug-card {
-    flex: 0 0 320px; /* Fixed width so cards don't shrink */
-    scroll-snap-align: start; /* Snaps perfectly when scrolling */
+    flex: 0 0 320px; 
+    scroll-snap-align: start; 
     background: rgba(10, 15, 30, 0.6);
     border: 1px solid rgba(0, 243, 255, 0.2);
     border-radius: 12px;
@@ -1100,23 +1004,17 @@ footer {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Default Hover Effect for Bug Cards (Cyan/Blue) */
 .bug-card:hover {
     transform: translateY(-5px);
     border-color: #00f3ff;
     box-shadow: 0 8px 25px rgba(0, 243, 255, 0.2);
 }
 
-/* --- AUTO-GREEN GLOW FOR FIXED BUGS --- */
 .bug-card:has(.badge-fixed) {
     border: 1px solid rgba(0, 255, 136, 0.4); 
     background: rgba(0, 255, 136, 0.05); 
 }
-.bug-card:has(.badge-fixed):hover {
-    border-color: #00ff88;
-    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.25);
-}
-/* -------------------------------------- */
+.bug-card:has(.badge-fixed):hover { border-color: #00ff88; box-shadow: 0 8px 25px rgba(0, 255, 136, 0.25); }
 
 .bug-header {
     display: flex;
@@ -1126,33 +1024,11 @@ footer {
     padding-bottom: 10px;
 }
 
-.bug-id {
-    font-weight: bold;
-    color: #8892b0;
-    font-family: monospace;
-    font-size: 0.9rem;
-}
+.bug-id { font-weight: bold; color: #8892b0; font-family: monospace; font-size: 0.9rem; }
+.bug-title { color: #fff; font-size: 1.2rem; margin: 0; }
+.bug-desc { color: #a8b2d1; font-size: 0.9rem; line-height: 1.5; flex-grow: 1; }
+.bug-footer { display: flex; justify-content: flex-start; padding-top: 10px; }
 
-.bug-title {
-    color: #fff;
-    font-size: 1.2rem;
-    margin: 0;
-}
-
-.bug-desc {
-    color: #a8b2d1;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    flex-grow: 1;
-}
-
-.bug-footer {
-    display: flex;
-    justify-content: flex-start;
-    padding-top: 10px;
-}
-
-/* --- BADGES (Status) --- */
 .badge {
     padding: 4px 10px;
     border-radius: 20px;
@@ -1165,12 +1041,7 @@ footer {
 .badge-open { background: rgba(255, 68, 68, 0.1); color: #ff4444; border: 1px solid #ff4444; }
 .badge-progress { background: rgba(255, 170, 0, 0.1); color: #ffaa00; border: 1px solid #ffaa00; }
 
-/* --- SEVERITY LABELS --- */
-.severity {
-    font-size: 0.8rem;
-    font-weight: bold;
-    font-family: monospace;
-}
+.severity { font-size: 0.8rem; font-weight: bold; font-family: monospace; }
 .severity-high { color: #ff4444; }
 .severity-medium { color: #ffaa00; }
 .severity-low { color: #00f3ff; }
